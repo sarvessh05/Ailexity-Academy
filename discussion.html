@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Discussion - AILexity Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- EasyMDE Markdown Editor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+    <!-- Highlight.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <style>
+        :root {
+            --brand: #FF5500;
+            --dark: #0A0A0A;
+            --grey-bg: #F5F5F7;
+            --card-bg: #FFFFFF;
+            --border: #E5E5E7;
+            --text-main: #1D1D1F;
+            --text-muted: #86868B;
+            --radius: 20px;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--grey-bg);
+            color: var(--text-main);
+            display: flex;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        aside {
+            width: 240px;
+            background: var(--dark);
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            padding: 2rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .logo {
+            color: white;
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo i {
+            color: var(--brand);
+        }
+
+        nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #a1a1a6;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.3s;
+            margin-bottom: 5px;
+        }
+
+        nav a:hover {
+            background: rgba(255, 85, 0, 0.1);
+            color: var(--brand);
+        }
+
+        nav a.active {
+            background: var(--brand);
+            color: white;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            padding: 2rem 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        /* Content Area Styles */
+        .search-bar-container {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            font-size: 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            box-shadow: var(--shadow);
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            color: var(--text-main);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--brand);
+            box-shadow: 0 0 0 3px rgba(255, 85, 0, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 18px;
+            pointer-events: none;
+        }
+
+        .post-creator {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .post-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            resize: vertical;
+            min-height: 80px;
+            font-family: inherit;
+            margin-bottom: 15px;
+            background: #FAFAFA;
+        }
+
+        .btn-post {
+            background: var(--brand);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .btn-post:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 85, 0, 0.3);
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--brand);
+            color: var(--brand);
+        }
+
+        .filter-btn.active {
+            background: var(--brand);
+            color: white;
+            border-color: var(--brand);
+        }
+
+        .thread-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+
+        .thread-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 85, 0, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .thread-card.solved-card {
+            border-left: 4px solid #2ecc71;
+            background: linear-gradient(to right, #fafffc, #ffffff);
+        }
+
+        .user-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .thread-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+        }
+
+        .thread-preview {
+            color: #555;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .thread-stats {
+            display: flex;
+            gap: 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            align-items: center;
+        }
+
+        .tag {
+            background: rgba(88, 86, 214, 0.1);
+            color: #5856D6;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-left: auto;
+        }
+
+        .vote-btn {
+            background: #FAFAFA;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 14px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .vote-btn:hover {
+            border-color: var(--brand);
+            color: var(--brand);
+            background: white;
+        }
+
+        .vote-btn.active {
+            background: var(--brand);
+            color: white;
+            border-color: var(--brand);
+        }
+
+        /* Thread Detail Styling */
+        .reply-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .original-post {
+            margin-bottom: 30px;
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius);
+        }
+
+        .op-badge {
+            background: #5856D6;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            vertical-align: middle;
+        }
+
+        /* EasyMDE Customization */
+        .EasyMDEContainer .editor-toolbar {
+            border-color: var(--border);
+            background: #FAFAFA;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .EasyMDEContainer .CodeMirror {
+            border-color: var(--border);
+            border-radius: 0 0 8px 8px;
+        }
+
+        .editor-preview pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside>
+        <div class="logo" onclick="window.location.href='course-dashboard.html'"><i class="fas fa-bolt"></i> AILEXITY
+        </div>
+        <nav>
+            <a href="course-dashboard.html"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+            <a href="#" class="active"><i class="fas fa-comments"></i> Discussions</a>
+            <a href="#" onclick="alert('Navigate to Curriculum')"><i class="fas fa-play-circle"></i> Curriculum</a>
+            <a href="#" onclick="alert('Navigate to Labs')"><i class="fas fa-code"></i> Labs</a>
+        </nav>
+    </aside>
+
+    <main>
+        <header>
+            <div>
+                <h2 style="font-size: 1.5rem; font-weight: 800;" id="pageTitle">Class Discussion</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Join the conversation with your peers.</p>
+            </div>
+            <div class="user-profile">
+                <i class="far fa-bell" style="color: var(--text-muted); font-size: 1.2rem; margin-right: 15px;"></i>
+                <img src="https://ui-avatars.com/api/?name=User&background=FF5500&color=fff" id="userHeaderAvatar"
+                    alt="Profile">
+                <span id="userHeaderName" style="font-weight: 600; font-size: 0.95rem;">Guest</span>
+            </div>
+        </header>
+
+        <!-- Discussion Home (List View) -->
+        <div id="discussion-home">
+            <!-- Search Bar -->
+            <div class="search-bar-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search discussions, questions, tags..."
+                    id="searchDiscussions">
+            </div>
+
+            <!-- New Post Area -->
+            <div class="post-creator">
+                <h3 style="margin-top:0; font-size: 1.1rem; margin-bottom: 15px;">Start a Discussion</h3>
+                <textarea class="post-input"
+                    placeholder="Have a question? Ask your classmates and instructor..."></textarea>
+                <button class="btn-post">Post Question</button>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters">
+                <button class="filter-btn active">Top Questions</button>
+                <button class="filter-btn">Recent</button>
+                <button class="filter-btn">Unanswered</button>
+            </div>
+
+            <!-- Threads -->
+            <div class="thread-list" id="thread-list">
+                <!-- Threads injected via JS -->
+            </div>
+        </div>
+
+        <!-- Thread Detail View (Hidden by default) -->
+        <div id="discussion-detail" style="display: none;">
+            <div style="margin-bottom: 20px;">
+                <button class="back-link"
+                    style="background:none; border:none; cursor:pointer; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 8px; font-size: 0.95rem;"
+                    onclick="showHome()">
+                    <i class="fas fa-arrow-left"></i> Back to Discussions
+                </button>
+            </div>
+
+            <div id="thread-content-area">
+                <!-- Content injected via JS -->
+            </div>
+
+            <div class="post-creator" style="margin-top: 30px;">
+                <h3 style="margin-bottom: 15px;">Post a Reply</h3>
+                <textarea class="post-input" id="reply-input" placeholder="Write your helpful reply here..."></textarea>
+                <div style="margin-top: 15px; text-align: right;">
+                    <button class="btn-post" onclick="submitReply()">Submit Reply</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- EasyMDE JS -->
+    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+    <script>
+        // Back button logic (mostly visual now since we have sidebar)
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseId = urlParams.get('courseId') || '1';
+
+        const API_BASE_URL = 'http://localhost:5000';
+
+        // Check for logged in user
+        const storedUser = localStorage.getItem('ailexity_current_user');
+        const currentUser = storedUser ? JSON.parse(storedUser) : null;
+        const authToken = localStorage.getItem('ailexity_auth_token');
+
+        // Update Header
+        if (currentUser) {
+            document.getElementById('userHeaderName').innerText = currentUser.name.split(' ')[0];
+            document.getElementById('userHeaderAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name)}&background=FF5500&color=fff&bold=true`;
+        }
+
+        // Initialize EasyMDE for the main post input (Create Thread)
+        const easyMDE = new EasyMDE({
+            element: document.querySelector('.post-input'),
+            spellChecker: false,
+            placeholder: currentUser ? `Hi ${currentUser.name}, what's on your mind?` : "Type your question here...\n(Log in to post with your name!)",
+            status: false,
+            autosave: {
+                enabled: true,
+                uniqueId: "discussion_post_draft",
+                delay: 1000,
+            },
+            toolbar: ["bold", "italic", "heading", "|", "code", "quote", "|", "link", "image", "|", "preview"],
+            renderingConfig: {
+                codeSyntaxHighlighting: true, // Uses highlight.js
+            },
+        });
+
+        const postBtn = document.querySelector('.btn-post');
+        postBtn.onclick = async () => {
+            const content = easyMDE.value();
+            if (!content) return alert("Please enter some content");
+
+            let title = prompt("Please enter a title for your discussion:");
+            if (!title) return;
+
+            let authorName;
+            if (currentUser) {
+                authorName = currentUser.name;
+            } else {
+                authorName = prompt("Enter your name:", "Student User");
+                if (!authorName) authorName = "Anonymous Student";
+            }
+
+            const newThread = {
+                user: authorName,
+                avatar: authorName.charAt(0).toUpperCase(),
+                color: currentUser ? '#FF5733' : '#999',
+                textColor: '#fff',
+                title: title,
+                content: content,
+                tag: 'General',
+                time: 'Just now'
+            };
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/courses/${courseId}/discussions`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': authToken // Send token if we have it
+                    },
+                    body: JSON.stringify(newThread)
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert("Posted successfully!");
+                    easyMDE.value('');
+                    await loadDiscussions();
+                } else {
+                    alert(data.message || "Error posting");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Failed to connect to server. Ensure auth_server.py is running at http://localhost:5000");
+            }
+        };
+
+        // Initialize EasyMDE for the reply input
+        const replyMDE = new EasyMDE({
+            element: document.getElementById('reply-input'),
+            spellChecker: false,
+            placeholder: "Write your helpful reply here... Use code blocks if needed.",
+            status: false,
+            minHeight: "150px",
+            toolbar: ["bold", "italic", "code", "|", "link", "preview"],
+            renderingConfig: {
+                codeSyntaxHighlighting: true,
+            },
+        });
+
+        // Global state
+        let allDiscussions = [];
+        let currentThreadId = null;
+
+        // Fetch Discussions from Server
+        async function loadDiscussions() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/courses/${courseId}/discussions`);
+                if (!res.ok) throw new Error("Server returned " + res.status);
+                allDiscussions = await res.json();
+                renderDiscussions();
+            } catch (err) {
+                console.error("Failed to load discussions", err);
+                document.getElementById('thread-list').innerHTML = `
+                    <div style="text-align:center; padding:40px; color:#ef4444;">
+                        <i class="fas fa-exclamation-circle" style="font-size:24px; margin-bottom:10px;"></i><br>
+                        Failed to connect to server.<br>
+                        <small>Please ensure <b>auth_server.py</b> is running (python auth_server.py)</small>
+                    </div>`;
+            }
+        }
+
+        // Filter Logic
+        let currentFilter = 'top';
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.textContent.toLowerCase().includes('top') ? 'top' :
+                    btn.textContent.toLowerCase().includes('recent') ? 'recent' : 'unanswered';
+                renderDiscussions(document.getElementById('searchDiscussions').value);
+            });
+        });
+
+        function renderDiscussions(searchTerm = '') {
+            const container = document.getElementById('thread-list');
+            let threads = [...allDiscussions];
+
+            if (searchTerm) {
+                const lowerTerm = searchTerm.toLowerCase();
+                threads = threads.filter(t =>
+                    t.title.toLowerCase().includes(lowerTerm) ||
+                    t.preview.toLowerCase().includes(lowerTerm) ||
+                    t.tag.toLowerCase().includes(lowerTerm)
+                );
+            }
+
+            if (currentFilter === 'unanswered') {
+                threads = threads.filter(t => t.replies === 0 && !t.isSolved);
+            }
+
+            if (currentFilter === 'top') {
+                threads.sort((a, b) => b.upvotes - a.upvotes);
+            } else if (currentFilter === 'recent' || currentFilter === 'unanswered') {
+                threads.sort((a, b) => b.id - a.id);
+            }
+
+            if (threads.length === 0) {
+                container.innerHTML = '<div style="text-align:center; padding:40px; color:#888;">No discussions found. Be the first to start a conversation!</div>';
+                return;
+            }
+
+            container.innerHTML = threads.map(t => `
+                <div class="thread-card ${t.isSolved ? 'solved-card' : ''}" onclick="viewThread(${t.id})">
+                    ${t.isSolved ? '<div style="float:right; color:#2ecc71; font-weight:bold; font-size:12px; background:#eaffea; padding:4px 8px; border-radius:12px;"><i class="fas fa-check"></i> Solved</div>' : ''}
+                    
+                    <div class="user-meta">
+                        <div class="avatar" style="background: ${t.color}; color: ${t.textColor}; font-size: 0.9rem; width:36px; height:36px;">${t.avatar}</div>
+                        <span style="font-weight: 600; color: var(--text-main);">${t.user}</span>
+                        <span>•</span>
+                        <span>${t.time}</span>
+                        <span class="tag">${t.tag}</span>
+                    </div>
+                    <h3 class="thread-title">${t.title}</h3>
+                    <p class="thread-preview">${t.preview}</p>
+                    <div class="thread-stats">
+                        <button class="vote-btn ${t.isUpvoted ? 'active' : ''}" onclick="event.stopPropagation(); toggleVote(${t.id})">
+                            <i class="fas fa-arrow-up"></i> ${t.upvotes}
+                        </button>
+                        <span><i class="far fa-comment"></i> ${t.replies} Replies</span>
+                        <span style="margin-left:auto; display:flex; align-items:center; gap:5px;"><i class="far fa-eye"></i> ${t.views}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        renderDiscussions();
+        loadDiscussions();
+
+        window.markAsSolution = async function (replyId) {
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/discussions/${currentThreadId}/replies/${replyId}/accept`, {
+                    method: 'POST'
+                });
+                const data = await res.json();
+                if (data.success) {
+                    await loadDiscussions();
+                    viewThread(currentThreadId);
+                } else {
+                    alert('Failed to mark solution.');
+                }
+            } catch (e) { console.error(e); }
+        };
+
+        function viewThread(id) {
+            currentThreadId = id;
+            const thread = allDiscussions.find(t => t.id === id);
+            if (!thread) return;
+
+            document.getElementById('discussion-home').style.display = 'none';
+            document.getElementById('discussion-detail').style.display = 'block';
+            replyMDE.value('');
+            const contentArea = document.getElementById('thread-content-area');
+
+            const repliesHtml = (thread.repliesData || []).map(r => {
+                const isAccepted = (thread.acceptedReplyId == r.id) || r.isAccepted;
+                const acceptedStyle = isAccepted ? 'border: 2px solid #2ecc71; background: #f0fff4;' : '';
+                const acceptedBadge = isAccepted ? '<div style="color:#2ecc71; font-weight:bold; margin-bottom:10px;"><i class="fas fa-check-circle"></i> Accepted Answer</div>' : '';
+
+                const markBtn = `
+                    <button onclick="markAsSolution(${r.id})" style="
+                        margin-left: auto; 
+                        background: ${isAccepted ? '#e0e0e0' : 'white'}; 
+                        border: 1px solid #ddd; 
+                        padding: 6px 14px; 
+                        border-radius: 50px; 
+                        cursor: pointer; 
+                        color: ${isAccepted ? '#555' : '#2ecc71'}; 
+                        font-size: 11px;
+                        font-weight: 600;
+                        transition: 0.3s;
+                        display: flex; align-items: center; gap: 5px;
+                        ">
+                        ${isAccepted ? 'Unmark Solution' : '<i class="fas fa-check"></i> Mark Solution'}
+                    </button>
+                `;
+
+                return `
+                <div class="reply-card" style="${acceptedStyle} position:relative;">
+                    ${acceptedBadge}
+                    <div class="user-meta">
+                        <div class="avatar" style="background: ${r.color}; color: ${r.textColor}; width:36px; height:36px;">${r.avatar}</div>
+                        <span style="font-weight:600; color:var(--text-main);">${r.user}</span>
+                        ${r.isStaff ? '<span class="op-badge">INSTRUCTOR</span>' : ''}
+                        ${thread.user === r.user ? '<span style="background:#eee; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:700;">OP</span>' : ''}
+                        <span>•</span>
+                        <span>${r.time}</span>
+                        ${markBtn}
+                    </div>
+                    <div class="reply-content">${easyMDE.options.previewRender(r.content)}</div>
+                    <div style="margin-top:15px; display:flex; gap:15px; font-size:13px; color:var(--text-muted); border-top:1px solid #eee; padding-top:12px;">
+                        <span><i class="far fa-heart"></i> ${r.upvotes} Likes</span>
+                    </div>
+                </div>
+            `}).join('');
+
+            contentArea.innerHTML = `
+                <div class="original-post">
+                    <div class="user-meta" style="margin-bottom:20px;">
+                        <div class="avatar" style="width:48px; height:48px; font-size:1.2rem; background: ${thread.color}; color: ${thread.textColor};">${thread.avatar}</div>
+                        <div>
+                            <div style="font-weight:700; font-size:1.05rem; color:var(--text-main);">${thread.user}</div>
+                            <div style="font-size:0.85rem; margin-top:2px;">${thread.time}</div>
+                        </div>
+                        <div class="tag">${thread.tag}</div>
+                    </div>
+                    <h2 class="thread-title" style="font-size:2rem; margin-bottom:20px; line-height:1.3;">
+                        ${thread.title}
+                    </h2>
+                    <div style="font-size:1.05rem; line-height:1.7; color:#333; margin-bottom:30px;">${easyMDE.options.previewRender(thread.content || thread.preview)}</div>
+                    <div class="thread-stats" style="border-top:1px solid #f0f0f0; padding-top:20px;">
+                        <button class="vote-btn ${thread.isUpvoted ? 'active' : ''}" onclick="toggleVote(${thread.id})">
+                             <i class="fas fa-arrow-up"></i> ${thread.upvotes} Upvotes
+                        </button>
+                        <span><i class="far fa-comment-alt"></i> ${thread.replies} Replies</span>
+                    </div>
+                </div>
+                
+                <h3 style="margin: 40px 0 25px 0; font-size:1.2rem;">
+                    ${thread.repliesData ? thread.repliesData.length : 0} Replies
+                </h3>
+                
+                <div class="replies-list" id="replies-container">
+                    ${repliesHtml}
+                </div>
+            `;
+
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        }
+
+        // Upvote Logic
+        window.toggleVote = async function (id) {
+            const thread = allDiscussions.find(t => t.id === id);
+            if (!thread) return;
+
+            const isUp = !thread.isUpvoted;
+            if (isUp) {
+                thread.upvotes++;
+                thread.isUpvoted = true;
+            } else {
+                thread.upvotes--;
+                thread.isUpvoted = false;
+            }
+
+            if (currentThreadId === id) viewThread(id);
+            else renderDiscussions(document.getElementById('searchDiscussions').value);
+
+            try {
+                await fetch(`${API_BASE_URL}/api/discussions/${id}/vote`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: isUp ? 'up' : 'down' })
+                });
+            } catch (e) { console.error("Vote failed", e); }
+        };
+
+        // Search listener
+        document.getElementById('searchDiscussions').addEventListener('input', (e) => {
+            renderDiscussions(e.target.value);
+        });
+    </script>
+</body>
+
+</html>

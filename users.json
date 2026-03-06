@@ -1,0 +1,139 @@
+[
+  {
+    "id": "1769112053184",
+    "name": "Aalok Nikam",
+    "email": "aaloknikam@gmail.com",
+    "password": "$2b$10$F.h8crtmNEGNG1M6ytijj.umd3Et5ibqw6pV6ICVZgZrfVCrx1gzm",
+    "enrolledCourses": [],
+    "joinedDate": "2026-01-22T20:00:53.185Z"
+  },
+  {
+    "id": "1769112177108",
+    "name": "Aditya Pawade",
+    "email": "adityapawade42@gmail.com",
+    "password": "$2b$10$uD7LGTLvM24Y0B1jk3bz..FwtJXEv2bVlPIDX4nycFz6.e1qe6Nu.",
+    "enrolledCourses": [],
+    "joinedDate": "2026-01-22T20:02:57.108Z",
+    "picture": "https://lh3.googleusercontent.com/a/ACg8ocLSRuh059Od0TnBfAVmG5Qws7DvoqvBu5fLJT1vo8ob1S-ewg=s96-c"
+  },
+  {
+    "id": "1769115560288",
+    "name": "atharva",
+    "email": "atharva@gmail.com",
+    "password": "$2b$10$Fr.W0MI0YSqZ9hz0y6p0wurrc8Ov0SMyiXKuW0.PrETY0VAqSUtd6",
+    "enrolledCourses": [],
+    "joinedDate": "2026-01-22T20:59:20.289Z"
+  },
+  {
+    "id": "1769423633353",
+    "name": "Alok Nikam",
+    "email": "aloknikam@gmail.com",
+    "password": "$2b$10$sCOzyJPSh6U5TqG.na7ly.kvqvIl8BLsdpnU5h7w3z6vI/aJPn9xi",
+    "enrolledCourses": [],
+    "joinedDate": "2026-01-26T10:33:53.353Z"
+  },
+  {
+    "id": "430166",
+    "name": "Demo Google User",
+    "email": "demo_user_526@google.com",
+    "password": "oauth_google_secure",
+    "enrolledCourses": [],
+    "joinedDate": "2026-01-31T17:05:43.687124"
+  },
+  {
+    "id": "830524",
+    "name": "Demo Google User",
+    "email": "demo_user_137@google.com",
+    "password": "oauth_google_secure",
+    "enrolledCourses": [],
+    "joinedDate": "2026-01-31T17:06:15.851827"
+  },
+  {
+    "id": "896096",
+    "name": "Demo Facebook User",
+    "email": "demo_user_554@facebook.com",
+    "password": "oauth_facebook_secure",
+    "enrolledCourses": [],
+    "joinedDate": "2026-01-31T17:06:25.607160"
+  },
+  {
+    "id": "978431",
+    "name": "Demo Google User",
+    "email": "demo_user_954@google.com",
+    "password": "oauth_google_secure",
+    "enrolledCourses": [],
+    "joinedDate": "2026-01-31T17:06:30.608921"
+  },
+  {
+    "id": "412245",
+    "name": "Demo Google User",
+    "email": "demo_user_225@google.com",
+    "password": "oauth_google_secure",
+    "enrolledCourses": [],
+    "joinedDate": "2026-01-31T17:13:28.530154"
+  },
+  {
+    "id": "155327",
+    "name": "Demo Google User",
+    "email": "demo_user_745@google.com",
+    "password": "oauth_google_secure",
+    "enrolledCourses": [],
+    "joinedDate": "2026-01-31T17:17:11.662524"
+  },
+  {
+    "id": "605465",
+    "name": "Demo Google User",
+    "email": "demo_user_655@google.com",
+    "password": "oauth_google_secure",
+    "enrolledCourses": [],
+    "joinedDate": "2026-01-31T17:19:29.357511"
+  },
+  {
+    "id": "476148",
+    "name": "Aditya Suryawanshi",
+    "email": "21adityaadi@gmail.com",
+    "password": "oauth_google_secure",
+    "enrolledCourses": [],
+    "joinedDate": "2026-02-01T17:15:36.420771"
+  },
+  {
+    "id": "540570",
+    "name": "Demo Google User",
+    "email": "demo_user_484@google.com",
+    "password": "oauth_google_secure",
+    "enrolledCourses": [],
+    "joinedDate": "2026-02-01T17:17:25.068251"
+  },
+  {
+    "id": "110863",
+    "name": "Demo Google User",
+    "email": "demo_user_242@google.com",
+    "password": "oauth_google_secure",
+    "enrolledCourses": [],
+    "joinedDate": "2026-02-01T17:17:35.084417"
+  },
+  {
+    "id": "472015",
+    "name": "Demo Google User",
+    "email": "demo_user_516@google.com",
+    "password": "oauth_google_secure",
+    "enrolledCourses": [],
+    "joinedDate": "2026-02-01T17:25:42.254276"
+  },
+  {
+    "id": "849978",
+    "name": "Demo Google User",
+    "email": "demo_user_857@google.com",
+    "password": "oauth_google_secure",
+    "enrolledCourses": [],
+    "joinedDate": "2026-02-01T17:47:15.057840"
+  },
+  {
+    "id": "134198",
+    "name": "Demo Google User",
+    "email": "demo_user_227@google.com",
+    "password": "oauth_google_secure",
+    "enrolledCourses": [],
+    "joinedDate": "2026-02-01T17:47:18.123491"
+  }
+]

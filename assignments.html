@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Assignments - AILexity Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --color-primary: #FF5733;
+            --color-dark: #2D3436;
+            --color-light: #F5F5F5;
+            --color-border: #DDD;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F9F9F9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .page-title {
+            font-size: 28px;
+            color: var(--color-dark);
+            margin: 10px 0 0 0;
+        }
+
+        /* Assignment Cards */
+        .assignment-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--color-border);
+            display: flex;
+            gap: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .assignment-status {
+            width: 6px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        .status-pending .assignment-status {
+            background: #FFC107;
+        }
+
+        .status-submitted .assignment-status {
+            background: #4CAF50;
+        }
+
+        .status-graded .assignment-status {
+            background: #2196F3;
+        }
+
+        .assignment-main {
+            flex: 1;
+            padding-left: 10px;
+        }
+
+        .assignment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .assignment-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+            color: var(--color-dark);
+        }
+
+        .badge {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .badge-urgent {
+            color: #d32f2f;
+            background: #ffebee;
+        }
+
+        .badge-done {
+            color: #388e3c;
+            background: #e8f5e9;
+        }
+
+        .badge-info {
+            color: #1976d2;
+            background: #e3f2fd;
+        }
+
+        .assignment-desc {
+            color: #555;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* File Upload */
+        .upload-zone {
+            border: 2px dashed var(--color-border);
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px;
+            background: #fafafa;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--color-primary);
+            background: #fff5f2;
+        }
+
+        .upload-icon {
+            font-size: 24px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .btn-submit {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 15px;
+            float: right;
+        }
+
+        .grade-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <a href="course-dashboard.html" class="back-link" id="backToDash"><i class="fas fa-arrow-left"></i> Back
+                    to Course</a>
+                <h1 class="page-title">Assignments</h1>
+            </div>
+            <div style="text-align: right; color: #666;">
+                <div style="font-size: 24px; font-weight: 700; color: var(--color-primary);">85%</div>
+                <div>Grade Average</div>
+            </div>
+        </div>
+
+        <div id="assignments-container">
+            <!-- Assignments Injected Here -->
+        </div>
+
+        <script src="js/db.js"></script>
+        <script src="js/auth.js"></script>
+        <script>
+            const API_BASE_URL = 'http://localhost:5000/api';
+
+            async function apiCall(endpoint) {
+                const token = localStorage.getItem('ailexity_auth_token');
+                const headers = { 'Content-Type': 'application/json' };
+                if (token) headers['Authorization'] = token;
+                try {
+                    const res = await fetch(`${API_BASE_URL}${endpoint}`, { headers });
+                    return await res.json();
+                } catch (err) { console.error(err); return []; }
+            }
+
+            // Back Button
+            const urlParams = new URLSearchParams(window.location.search);
+            const courseId = urlParams.get('courseId') || '1';
+            document.getElementById('backToDash').href = `course-dashboard.html?courseId=${courseId}`;
+
+            const renderAssignments = async () => {
+                const container = document.getElementById('assignments-container');
+                container.innerHTML = '<div style="text-align:center; padding:20px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+
+                // Fetch assignments from Local DB (Simulating API)
+                // In real app we might await this if it was async
+                let assignments = db.getCourseAssignments(courseId);
+
+                // If it returns empty, maybe seed it via db.init? 
+                // db.js init already seeds.
+
+                if (!assignments) assignments = [];
+
+                let html = '';
+
+                // Separate by status for headers
+                // Note: The API returns the raw assignment definition. 
+                // In a real app, we would join this with user submission status.
+                // For now, valid 'mock' status comes from the assignment definition itself (likely 'pending').
+                const pending = assignments.filter(a => a.status === 'pending' || !a.status);
+                const history = assignments.filter(a => a.status && a.status !== 'pending');
+
+                if (pending.length > 0) {
+                    html += `<h3 style="color: #666; margin-bottom: 15px;">Pending</h3>`;
+                    pending.forEach((a, idx) => {
+                        // Ensure we have an ID for submission tracking
+                        const aId = a.id || `assign_${idx}`;
+                        html += `
+                    <div class="assignment-card status-pending">
+                        <div class="assignment-status"></div>
+                        <div class="assignment-main">
+                            <div class="assignment-header">
+                                <h3 class="assignment-title">${a.title}</h3>
+                                <span class="badge ${a.badge || 'badge-info'}">Due: ${a.due_date || a.due}</span>
+                            </div>
+                            <p class="assignment-desc">${a.desc || ''}</p>
+                            <div class="upload-zone" id="drop-zone-${idx}">
+                                <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                                <p style="margin:0;"><strong>Click to upload</strong> or drag and drop files here</p>
+                                <input type="file" id="file-${idx}" style="display: none;">
+                            </div>
+                            <button class="btn-submit" onclick="submitAssignment(this, '${aId}')">Submit Assignment</button>
+                        </div>
+                    </div>`;
+                    });
+                }
+
+                if (history.length > 0) {
+                    html += `<h3 style="color: #666; margin-bottom: 15px; margin-top: 40px;">Graded & Submitted</h3>`;
+                    history.forEach(a => {
+                        html += `
+                    <div class="assignment-card status-${a.status}">
+                        <div class="assignment-status"></div>
+                        <div class="assignment-main">
+                            <div class="assignment-header">
+                                <h3 class="assignment-title">${a.title}</h3>
+                                <span class="badge ${a.badge}">Due: ${a.due_date || a.due}</span>
+                            </div>
+                            <p class="assignment-desc">${a.desc}</p>
+                            ${a.grade ? `
+                            <div class="grade-box">
+                                <div style="font-weight: 600; font-size: 16px; margin-bottom: 5px;">Grade: ${a.grade}</div>
+                                <div style="color: #555; font-size: 14px;">"${a.feedback}"</div>
+                            </div>` : ''}
+                        </div>
+                    </div>`;
+                    });
+                }
+
+                if (html === '') {
+                    html = '<p style="text-align:center; color:#666;">No assignments found for this course.</p>';
+                }
+
+                container.innerHTML = html;
+
+                // Re-attach listeners
+                attachUploadListeners();
+            };
+
+            function submitAssignment(btn, assignmentId) {
+                const user = auth.getCurrentUser();
+
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+                btn.disabled = true;
+
+                setTimeout(() => {
+                    let result = null;
+                    if (user) {
+                        // Log assignment submission locally for progress
+                        result = db.logActivity(user.id, courseId, 'ASSIGNMENT_SUBMIT', assignmentId || 'unknown_assign');
+                    }
+
+                    alert("Assignment submitted successfully!" + (result && result.success ? ` Progress updated to ${result.newProgress}%` : ""));
+                    btn.innerHTML = 'Submitted';
+                    btn.style.background = '#4CAF50';
+                }, 1500);
+            }
+
+            function attachUploadListeners() {
+                document.querySelectorAll('.upload-zone').forEach(zone => {
+                    zone.addEventListener('click', () => {
+                        zone.querySelector('input').click();
+                    });
+                    zone.querySelector('input').addEventListener('change', (e) => {
+                        if (e.target.files.length > 0) {
+                            zone.style.background = '#e8f5e9';
+                            zone.style.borderColor = '#4CAF50';
+                            zone.innerHTML = `<i class="fas fa-file-alt" style="color:#4CAF50; font-size: 24px;"></i><br><strong>${e.target.files[0].name}</strong> ready to submit`;
+                        }
+                    });
+                });
+            }
+
+            renderAssignments();
+        </script>
+</body>
+
+</html>

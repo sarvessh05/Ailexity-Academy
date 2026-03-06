@@ -1,0 +1,299 @@
+[
+    {
+        "id": 1769946260608,
+        "userId": "1769112177108",
+        "courseId": "2",
+        "activityType": "UI_CLICK",
+        "itemId": "nav_video",
+        "timestamp": "2026-02-01T11:44:20.608Z",
+        "meta": {
+            "title": "Accessed Video Curriculum"
+        }
+    },
+    {
+        "id": 1769946282722,
+        "userId": "1769112177108",
+        "courseId": "2",
+        "activityType": "VIDEO_COMPLETE",
+        "itemId": 201,
+        "timestamp": "2026-02-01T11:44:42.722Z",
+        "meta": {
+            "timestamp": 1769946282722
+        }
+    },
+    {
+        "id": 1769946288522,
+        "userId": "1769112177108",
+        "courseId": "2",
+        "activityType": "UI_CLICK",
+        "itemId": "nav_video",
+        "timestamp": "2026-02-01T11:44:48.522Z",
+        "meta": {
+            "title": "Accessed Video Curriculum"
+        }
+    },
+    {
+        "id": 1769946301718,
+        "userId": "1769112177108",
+        "courseId": "2",
+        "activityType": "VIDEO_COMPLETE",
+        "itemId": 202,
+        "timestamp": "2026-02-01T11:45:01.718Z",
+        "meta": {
+            "timestamp": 1769946301718
+        }
+    },
+    {
+        "id": 1769947071543,
+        "userId": "1769112177108",
+        "courseId": "1",
+        "activityType": "UI_CLICK",
+        "itemId": "nav_video",
+        "timestamp": "2026-02-01T11:57:51.543Z",
+        "meta": {
+            "title": "Accessed Video Curriculum"
+        }
+    },
+    {
+        "id": 1769947136322,
+        "userId": "1769112177108",
+        "courseId": "1",
+        "activityType": "UI_CLICK",
+        "itemId": "nav_video",
+        "timestamp": "2026-02-01T11:58:56.322Z",
+        "meta": {
+            "title": "Accessed Video Curriculum"
+        }
+    },
+    {
+        "id": 1769947343874,
+        "userId": 1769947325624,
+        "courseId": "1",
+        "activityType": "UI_CLICK",
+        "itemId": "nav_video",
+        "timestamp": "2026-02-01T12:02:23.874Z",
+        "meta": {
+            "title": "Accessed Video Curriculum"
+        }
+    },
+    {
+        "id": 1769947347154,
+        "userId": 1769947325624,
+        "courseId": "1",
+        "activityType": "LESSON_VIEW",
+        "itemId": 101,
+        "timestamp": "2026-02-01T12:02:27.154Z",
+        "meta": {
+            "title": "1.1 Introduction & Linear Regression"
+        }
+    },
+    {
+        "id": 1769947349299,
+        "userId": 1769947325624,
+        "courseId": "1",
+        "activityType": "VIDEO_COMPLETE",
+        "itemId": 101,
+        "timestamp": "2026-02-01T12:02:29.299Z",
+        "meta": {
+            "timestamp": 1769947349299
+        }
+    },
+    {
+        "id": 1769947350812,
+        "userId": 1769947325624,
+        "courseId": "1",
+        "activityType": "LESSON_VIEW",
+        "itemId": 102,
+        "timestamp": "2026-02-01T12:02:30.812Z",
+        "meta": {
+            "title": "1.2 Gradient Descent & Normal Equations"
+        }
+    },
+    {
+        "id": 1769947353819,
+        "userId": 1769947325624,
+        "courseId": "1",
+        "activityType": "VIDEO_COMPLETE",
+        "itemId": 102,
+        "timestamp": "2026-02-01T12:02:33.819Z",
+        "meta": {
+            "timestamp": 1769947353819
+        }
+    },
+    {
+        "id": 1769947355323,
+        "userId": 1769947325624,
+        "courseId": "1",
+        "activityType": "LESSON_VIEW",
+        "itemId": 103,
+        "timestamp": "2026-02-01T12:02:35.323Z",
+        "meta": {
+            "title": "1.3 Locally Weighted & Logistic Regression"
+        }
+    },
+    {
+        "id": 1769947358300,
+        "userId": 1769947325624,
+        "courseId": "1",
+        "activityType": "VIDEO_COMPLETE",
+        "itemId": 103,
+        "timestamp": "2026-02-01T12:02:38.300Z",
+        "meta": {
+            "timestamp": 1769947358300
+        }
+    },
+    {
+        "id": 1769947359809,
+        "userId": 1769947325624,
+        "courseId": "1",
+        "activityType": "LESSON_VIEW",
+        "itemId": 104,
+        "timestamp": "2026-02-01T12:02:39.809Z",
+        "meta": {
+            "title": "2.1 GDA & Naive Bayes"
+        }
+    },
+    {
+        "id": 1769947816606,
+        "userId": "1769112177108",
+        "courseId": "2",
+        "activityType": "UI_CLICK",
+        "itemId": "nav_video",
+        "timestamp": "2026-02-01T12:10:16.606Z",
+        "meta": {
+            "title": "Accessed Video Curriculum"
+        }
+    },
+    {
+        "id": 1769948806639,
+        "userId": "1769112177108",
+        "courseId": "2",
+        "activityType": "UI_CLICK",
+        "itemId": "nav_video",
+        "timestamp": "2026-02-01T12:26:46.639Z",
+        "meta": {
+            "title": "Accessed Video Curriculum"
+        }
+    },
+    {
+        "id": 1769948810037,
+        "userId": "1769112177108",
+        "courseId": "2",
+        "activityType": "LESSON_VIEW",
+        "itemId": 201,
+        "timestamp": "2026-02-01T12:26:50.037Z",
+        "meta": {
+            "title": "1.1 HTML5 Crash Course"
+        }
+    },
+    {
+        "id": 1770277880675,
+        "userId": "1769112177108",
+        "courseId": "1",
+        "activityType": "UI_CLICK",
+        "itemId": "nav_video",
+        "timestamp": "2026-02-05T07:51:20.675Z",
+        "meta": {
+            "title": "Accessed Video Curriculum"
+        }
+    },
+    {
+        "id": 1770277881615,
+        "userId": "1769112177108",
+        "courseId": "1",
+        "activityType": "LESSON_VIEW",
+        "itemId": 101,
+        "timestamp": "2026-02-05T07:51:21.615Z",
+        "meta": {
+            "title": "1.1 Introduction & Linear Regression"
+        }
+    },
+    {
+        "id": 1770277892058,
+        "userId": "1769112177108",
+        "courseId": "1",
+        "activityType": "LESSON_VIEW",
+        "itemId": 102,
+        "timestamp": "2026-02-05T07:51:32.058Z",
+        "meta": {
+            "title": "1.2 Gradient Descent & Normal Equations"
+        }
+    },
+    {
+        "id": 1770277904208,
+        "userId": "1769112177108",
+        "courseId": "1",
+        "activityType": "LESSON_VIEW",
+        "itemId": 103,
+        "timestamp": "2026-02-05T07:51:44.208Z",
+        "meta": {
+            "title": "1.3 Locally Weighted & Logistic Regression"
+        }
+    },
+    {
+        "id": 1770277926992,
+        "userId": "1769112177108",
+        "courseId": "1",
+        "activityType": "UI_CLICK",
+        "itemId": "nav_video",
+        "timestamp": "2026-02-05T07:52:06.992Z",
+        "meta": {
+            "title": "Accessed Video Curriculum"
+        }
+    },
+    {
+        "id": 1770277972012,
+        "userId": "1769112177108",
+        "courseId": "1",
+        "activityType": "UI_CLICK",
+        "itemId": "nav_discussion",
+        "timestamp": "2026-02-05T07:52:52.012Z",
+        "meta": {
+            "title": "Joined Class Discussion"
+        }
+    },
+    {
+        "id": 1770281417699,
+        "userId": "1769112177108",
+        "courseId": "1",
+        "activityType": "UI_CLICK",
+        "itemId": "course_card",
+        "timestamp": "2026-02-05T08:50:17.699Z",
+        "meta": {
+            "title": "Viewed Course Card"
+        }
+    },
+    {
+        "id": 1770281423835,
+        "userId": "1769112177108",
+        "courseId": "1",
+        "activityType": "UI_CLICK",
+        "itemId": "nav_video",
+        "timestamp": "2026-02-05T08:50:23.835Z",
+        "meta": {
+            "title": "Accessed Video Curriculum"
+        }
+    },
+    {
+        "id": 1770281427060,
+        "userId": "1769112177108",
+        "courseId": "1",
+        "activityType": "VIDEO_COMPLETE",
+        "itemId": 101,
+        "timestamp": "2026-02-05T08:50:27.060Z",
+        "meta": {
+            "timestamp": 1770281427060
+        }
+    },
+    {
+        "id": 1770281430277,
+        "userId": "1769112177108",
+        "courseId": "1",
+        "activityType": "VIDEO_COMPLETE",
+        "itemId": 102,
+        "timestamp": "2026-02-05T08:50:30.277Z",
+        "meta": {
+            "timestamp": 1770281430277
+        }
+    }
+]

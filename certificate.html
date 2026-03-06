@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of Completion - AILexity Academy</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Roboto:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-back {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-back:hover {
+            background: #d0d0d0;
+        }
+
+        /* Certificate Design */
+        #certificate {
+            width: 100%;
+            max-width: 1100px;
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cert-inner-border {
+            width: 100%;
+            height: 100%;
+            border: 2px solid #000;
+            padding: 50px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            background: white;
+        }
+
+        .logo {
+            font-weight: 900;
+            color: #000;
+            font-size: 32px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .logo span {
+            display: none;
+        }
+
+        .cert-header {
+            font-size: 18px;
+            color: #666;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .student-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 52px;
+            color: #1a1a1a;
+            font-weight: 400;
+            margin: 10px 0;
+            text-align: left;
+            line-height: 1.2;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            display: inline-block;
+            min-width: 300px;
+        }
+
+        .course-title {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: #000;
+            font-size: 48px;
+            letter-spacing: 4px;
+            text-align: left;
+            margin: 20px 0;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .instructor-info {
+            font-size: 16px;
+            color: #333;
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .instructor-info span {
+            font-weight: 600;
+        }
+
+        .footer-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 40px;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .cert-date {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Circular Seal */
+        .seal {
+            position: absolute;
+            bottom: 50px;
+            right: 50px;
+            width: 140px;
+            height: 140px;
+            border: 3px solid #000;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at 30% 30%, #f9f9f9 0%, #f0f0f0 100%);
+            position: relative;
+        }
+
+        .seal::before {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 1px dashed #000;
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
+        .seal-content {
+            text-align: center;
+            z-index: 1;
+            font-size: 14px;
+            font-weight: 700;
+            color: #000;
+            letter-spacing: 1px;
+        }
+
+        .seal-logo {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .seal-text {
+            font-size: 7px;
+            line-height: 1.2;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .cert-id {
+            position: absolute;
+            bottom: 20px;
+            right: 50px;
+            font-size: 11px;
+            color: #999;
+        }
+
+        .medal {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="controls">
+        <a href="student-dashboard.html" class="btn btn-back">Back to Dashboard</a>
+        <button onclick="downloadPDF()" class="btn btn-download">Download PDF</button>
+    </div>
+
+    <!-- Printable Certificate Area -->
+    <div id="certificate">
+        <div class="cert-inner-border">
+            <div class="logo">ailexity</div>
+
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                <p class="cert-header">Certificate of Completion</p>
+                <p style="font-size: 14px; color: #666; margin-top: 10px;">This is to certify that</p>
+
+                <div class="student-name" id="studentName">Student Name</div>
+
+                <p style="font-size: 14px; color: #666; margin: 15px 0;">Has successfully completed the course</p>
+
+                <h1 class="course-title" id="courseTitle">COURSE TITLE</h1>
+
+                <div style="display: flex; gap: 40px; margin-top: 30px; align-items: flex-end;">
+                    <div>
+                        <p class="instructor-info" style="margin: 0;">Instructor: <span id="instructorName">Aditya
+                                Pawade</span></p>
+                        <div style="height: 1px; background: #ddd; width: 100%; margin-top: 5px;"></div>
+                    </div>
+
+                    <div>
+                        <div class="cert-date" style="font-size: 16px;">Date: <span id="certDate">26-01-2026</span>
+                        </div>
+                        <div style="height: 1px; background: #ddd; width: 100%; margin-top: 5px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Circular Seal Badge -->
+            <div class="seal">
+                <div class="seal-content">
+                    <div class="seal-logo">ailexity</div>
+                    <div class="seal-text">Academy<br />Excellence<br />Learning</div>
+                </div>
+            </div>
+
+            <div class="cert-id" id="certId">ID: AILX-123456</div>
+        </div>
+    </div>
+
+    <script src="js/db.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Data Loading
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = auth.getCurrentUser();
+            const urlParams = new URLSearchParams(window.location.search);
+            const courseId = urlParams.get('courseId');
+
+            if (!user || !courseId) {
+                alert("Invalid Certificate Request");
+                window.location.href = 'student-dashboard.html';
+                return;
+            }
+
+            const enrollment = db.getEnrollment(user.id, courseId);
+            if (!enrollment || enrollment.progress < 100) {
+                alert("Certificate Locked: You must complete 100% of the course to access your certificate.");
+                window.location.href = `course-dashboard.html?courseId=${courseId}`;
+                return;
+            }
+
+            const course = db.getCourseById(courseId);
+
+            // Helper to format name (Title Case)
+            const formatName = (name) => {
+                return name
+                    .toLowerCase()
+                    .split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+            };
+
+            // Set Content with proper formatting (Auto Name Generation)
+            let formattedName = "Student Name";
+            if (user && user.name) {
+                formattedName = formatName(user.name);
+            }
+            document.getElementById('studentName').textContent = formattedName;
+            document.getElementById('courseTitle').textContent = course.title.toUpperCase();
+            document.getElementById('instructorName').textContent = course.instructor || 'Aditya Pawade';
+
+            // Format Date as DD-MM-YYYY
+            const today = new Date();
+            const day = String(today.getDate()).padStart(2, '0');
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const year = today.getFullYear();
+            document.getElementById('certDate').textContent = `${day}-${month}-${year}`;
+
+            // Generate Unique Cert ID (Deterministic for same user/course)
+            // Format: AXL-[COURSE_ID]-[USER_ID]-[RANDOM_SUFFIX_STORED]
+            // Ideally this should come from DB. We'll simulate a stable hash.
+            const uniqueHash = (str) => {
+                let hash = 0;
+                for (let i = 0; i < str.length; i++) {
+                    const char = str.charCodeAt(i);
+                    hash = (hash << 5) - hash + char;
+                    hash = hash & hash; // Convert to 32bit integer
+                }
+                return Math.abs(hash).toString(36).toUpperCase();
+            };
+
+            const certID = `AILX-${courseId.padStart(3, '0')}-${uniqueHash(user.id.toString())}`;
+            document.getElementById('certId').textContent = 'ID: ' + certID;
+        });
+
+        // PDF Generation
+        function downloadPDF() {
+            const element = document.getElementById('certificate');
+            const opt = {
+                margin: 0.5,
+                filename: `Certificate_${document.getElementById('studentName').textContent}_${document.getElementById('courseTitle').textContent}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+            };
+
+            // Using html2pdf library
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+
+</html>

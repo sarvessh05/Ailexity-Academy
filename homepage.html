@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ailexity Academy | Master the Future</title>
+    <link rel="stylesheet" href="css/theme.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #FF5722;
+            --primary-glow: rgba(255, 87, 34, 0.3);
+            --dark-bg: #0A0A0B;
+            --dark-card: #141416;
+            --dark-border: #232326;
+            --text-main: #FFFFFF;
+            --text-dim: #A1A1AA;
+            --white: #FFFFFF;
+            --glass: rgba(255, 255, 255, 0.03);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* --- Utilities --- */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .orange-text {
+            color: var(--primary);
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+            font-size: 15px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background: #f44336;
+            box-shadow: 0 6px 20px var(--primary-glow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--dark-border);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background: var(--glass);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid transparent;
+        }
+
+        header.scrolled {
+            background: rgba(10, 10, 11, 0.85);
+            border-bottom: 1px solid var(--dark-border);
+            padding: 15px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: radial-gradient(circle at 80% 20%, rgba(255, 87, 34, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 10% 80%, rgba(255, 87, 34, 0.05) 0%, transparent 40%);
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            line-height: 1.1;
+            font-weight: 800;
+            margin-bottom: 24px;
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-dim);
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+        }
+
+        /* --- Featured Courses --- */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: left;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: var(--text-dim);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .course-card {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+
+        .course-img {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .course-tag {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--primary);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .course-body {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-body h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+
+        .course-body p {
+            color: var(--text-dim);
+            font-size: 14px;
+            margin-bottom: 24px;
+            height: 44px;
+            overflow: hidden;
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--dark-border);
+            margin-top: auto;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        /* --- Program Card (Design from Gemini) --- */
+        :root {
+            --ailexity-orange: #FF5722;
+            --ailexity-black: #121212;
+            --ailexity-white: #FFFFFF;
+            --ailexity-gray: #F8F9FA;
+            --ailexity-text: #2D3436;
+        }
+
+        /* Courses Grid - ensuring it matches the new style */
+        .courses-grid-gemini {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+        }
+
+        /* Course Card Design */
+        .course-card-gemini {
+            background: var(--dark-card);
+            /* Adapting to theme */
+            border: 1px solid var(--dark-border);
+            border-radius: 4px;
+            padding: 60px 45px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .course-card-gemini:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+
+        /* Card Elements */
+        .course-icon-gemini {
+            font-size: 45px;
+            /* Reduced from 55px */
+            color: var(--primary);
+            margin-bottom: 15px;
+            /* Reduced from 25px */
+        }
+
+        .course-index-gemini {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 16px;
+            margin-bottom: 10px;
+            /* Reduced from 20px */
+            display: block;
+        }
+
+        .course-card-gemini h3 {
+            font-size: 24px;
+            /* Reduced from 28px */
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            /* Reduced from 25px */
+            letter-spacing: -0.5px;
+        }
+
+        .course-card-gemini p.description {
+            color: var(--text-dim);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            /* Reduced from 35px */
+            max-width: 300px;
+        }
+
+        /* Bullet List Style */
+        .skill-list-gemini {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 25px 0;
+            /* Reduced from 40px */
+            text-align: left;
+            width: 100%;
+            max-width: 260px;
+        }
+
+        .skill-list-gemini li {
+            color: var(--text-main);
+            font-size: 14px;
+            /* Reduced from 16px */
+            margin-bottom: 8px;
+            /* Reduced from 14px */
+            position: relative;
+            padding-left: 20px;
+            font-weight: 500;
+        }
+
+        .skill-list-gemini li::before {
+            content: "•";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            font-weight: 900;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .footer-text-gemini {
+            font-style: italic;
+            color: var(--text-dim);
+            font-size: 13px;
+            margin-bottom: 15px;
+            /* Adjusted spacing */
+        }
+
+        .price-gemini {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        /* Action Button */
+        .btn-enroll-gemini {
+            background-color: var(--primary);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 1px;
+            width: 100%;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-enroll-gemini:hover {
+            background-color: transparent;
+            color: var(--primary);
+        }
+
+        /* --- Bento Categories --- */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 200px);
+            gap: 20px;
+        }
+
+        .cat-card {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 4px;
+            /* Matching Gemini Card Style */
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cat-card:hover {
+            background: var(--primary);
+        }
+
+        .cat-card:hover * {
+            color: white !important;
+        }
+
+        .cat-card i {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .cat-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .cat-1 {
+            grid-column: span 2;
+        }
+
+        .cat-4 {
+            grid-row: span 2;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--dark-border);
+            background: #050505;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand p {
+            color: var(--text-dim);
+            margin-top: 20px;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 24px;
+            font-size: 16px;
+            color: var(--text-main);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        /* User Menu */
+        .user-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 12px;
+            min-width: 180px;
+            display: none;
+            margin-top: 10px;
+            flex-direction: column;
+            z-index: 1001;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .user-dropdown.active {
+            display: flex;
+        }
+
+        .user-dropdown a {
+            padding: 12px 20px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-dropdown a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--primary);
+        }
+
+        /* --- Testimonials --- */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .quote-icon {
+            font-size: 40px;
+            color: var(--primary);
+            opacity: 0.15;
+            position: absolute;
+            top: 24px;
+            right: 24px;
+        }
+
+        .testimonial-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-dim);
+            margin-bottom: 24px;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: auto;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--dark-border);
+            object-fit: cover;
+            border: 2px solid rgba(255, 87, 34, 0.2);
+        }
+
+        .user-details h4 {
+            color: var(--text-main);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .user-details span {
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .stars {
+            color: #FFD700;
+            font-size: 12px;
+            margin-top: 4px;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto;
+            }
+
+            .cat-card {
+                min-height: 200px;
+            }
+
+            .cat-1,
+            .cat-4 {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            /* Simplified mobile handling */
+        }
+    </style>
+</head>
+
+<body class="dark-default">
+
+    <header id="mainHeader">
+        <div class="container">
+            <nav>
+                <a href="homepage.html" class="logo">
+                    <i class="fas fa-bolt"></i> AILEXITY
+                </a>
+                <div class="nav-links">
+                    <a href="#home">Home</a>
+                    <a href="#courses">Courses</a>
+                    <a href="#categories">Categories</a>
+                    <div id="auth-buttons" style="display:flex; gap:10px;">
+                        <a href="login.html" class="btn btn-outline">Log In</a>
+                        <a href="register.html" class="btn btn-primary">Join Academy</a>
+                    </div>
+                    <div id="user-profile" style="display:none; align-items:center; gap:10px; cursor:pointer;"
+                        onclick="toggleUserMenu()">
+                        <img src="" id="userAvatar"
+                            style="width:36px; height:36px; border-radius:50%; border:2px solid var(--primary);">
+                        <span id="userName" style="font-weight:600; font-size:14px;">User</span>
+                        <i class="fas fa-chevron-down" style="font-size:12px; color:var(--text-dim);"></i>
+
+                        <div class="user-dropdown" id="userMenu">
+                            <a href="student-dashboard.html"><i class="fas fa-columns"></i> Dashboard</a>
+                            <a href="#" onclick="auth.logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main id="homeContent">
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="course-tag" style="position:static; display:inline-block; margin-bottom:20px">NEXT-GEN
+                        LEARNING</div>
+                    <h1>Upgrade Your <span class="orange-text">Digital DNA</span> With Experts</h1>
+                    <p>Master AI, Data Science, and Modern Web Development through high-impact, industry-vetted
+                        curriculums.</p>
+                    <div class="hero-btns">
+                        <a href="#courses" class="btn btn-primary">Browse Courses</a>
+                        <a href="register.html" class="btn btn-outline">View Roadmap</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="featured-programs">
+            <div class="container">
+
+                <div class="section-header" style="text-align: center;">
+                    <h2>Featured <span class="orange-text">Academy Programs</span></h2>
+                </div>
+
+                <div class="courses-grid-gemini">
+
+                    <div class="course-card-gemini">
+                        <div class="course-icon-gemini">⚙️</div>
+                        <span class="course-index-gemini">01</span>
+                        <h3>Machine Learning</h3>
+                        <p class="description">Advanced algorithms designed to streamline your data intelligence
+                            operations using modern Python frameworks.</p>
+
+                        <ul class="skill-list-gemini">
+                            <li>Predictive Modeling</li>
+                            <li>Neural Network Design</li>
+                            <li>Model Optimization</li>
+                        </ul>
+
+                        <p class="footer-text-gemini">And many more AI solutions...</p>
+                        <div class="price-gemini">Rs. 199</div>
+                        <a onclick="handleEnrollment(1)" class="btn-enroll-gemini">Enroll Now</a>
+                    </div>
+
+                    <div class="course-card-gemini">
+                        <div class="course-icon-gemini">💻</div>
+                        <span class="course-index-gemini">02</span>
+                        <h3>Software Development</h3>
+                        <p class="description">Custom software solutions built with modern technologies including React,
+                            Node.js, and cloud platforms.</p>
+
+                        <ul class="skill-list-gemini">
+                            <li>Full-Stack Engineering</li>
+                            <li>RESTful API Systems</li>
+                            <li>Agile Methodology</li>
+                        </ul>
+
+                        <p class="footer-text-gemini">And many more dev solutions...</p>
+                        <div class="price-gemini">Rs. 199</div>
+                        <a onclick="handleEnrollment(2)" class="btn-enroll-gemini">Enroll Now</a>
+                    </div>
+
+                    <div class="course-card-gemini">
+                        <div class="course-icon-gemini">📊</div>
+                        <span class="course-index-gemini">03</span>
+                        <h3>Data Science</h3>
+                        <p class="description">Data-driven strategies designed to extract valuable insights from large
+                            datasets to optimize business intelligence.</p>
+
+                        <ul class="skill-list-gemini">
+                            <li>Statistical Computing</li>
+                            <li>Advanced Visualization</li>
+                            <li>Big Data Analytics</li>
+                        </ul>
+
+                        <p class="footer-text-gemini">And many more data solutions...</p>
+                        <div class="price-gemini">Rs. 199</div>
+                        <a onclick="handleEnrollment(3)" class="btn-enroll-gemini">Enroll Now</a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="categories">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Explore <span class="orange-text">Categories</span></h2>
+                </div>
+                <div class="category-grid">
+                    <div class="cat-card cat-1">
+                        <i class="fas fa-brain"></i>
+                        <h3>Artificial Intelligence</h3>
+                        <p style="font-size: 13px; color:rgba(255,255,255,0.6); margin-top:5px;">12 Specialized Courses
+                        </p>
+                    </div>
+                    <div class="cat-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Cyber Security</h3>
+                    </div>
+                    <div class="cat-card cat-4">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Software Engineering</h3>
+                        <p style="font-size: 13px; color:rgba(255,255,255,0.6); margin-top:5px;">The core of digital
+                            innovation.</p>
+                    </div>
+                    <div class="cat-card">
+                        <i class="fas fa-pencil-ruler"></i>
+                        <h3>UI/UX Design</h3>
+                    </div>
+                    <div class="cat-card cat-1">
+                        <i class="fas fa-cloud"></i>
+                        <h3>Cloud Computing</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section" id="testimonials"
+            style="background: radial-gradient(circle at 50% 50%, rgba(255, 87, 34, 0.03) 0%, transparent 50%);">
+            <div class="container">
+                <div class="section-header" style="text-align: center; max-width: 700px; margin: 0 auto 60px;">
+                    <h2>What Our <span class="orange-text">Students Say</span></h2>
+                    <p>Don't just take our word for it. Hear from the ambitious minds building the future with Ailexity.
+                    </p>
+                </div>
+                <div class="testimonial-grid">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-right quote-icon"></i>
+                        <p class="testimonial-text">"The Machine Learning course completely changed my career
+                            trajectory. The depth of the curriculum and the practical projects gave me the confidence to
+                            apply for senior roles. Absolutely worth every penny."</p>
+                        <div class="user-info">
+                            <img src="https://ui-avatars.com/api/?name=Sarah+J&background=random" alt="User"
+                                class="avatar">
+                            <div class="user-details">
+                                <h4>Sarah Jenkins</h4>
+                                <span>ML Engineer at TechCorp</span>
+                                <div class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-right quote-icon"></i>
+                        <p class="testimonial-text">"I was skeptical about online bootcamps, but Ailexity is different.
+                            The mentors are industry veterans, and the community is incredibly supportive. I went from
+                            zero coding knowledge to a Junior Dev in 6 months."</p>
+                        <div class="user-info">
+                            <img src="https://ui-avatars.com/api/?name=David+R&background=random" alt="User"
+                                class="avatar">
+                            <div class="user-details">
+                                <h4>David Ross</h4>
+                                <span>Frontend Dev at CreativeStudio</span>
+                                <div class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-right quote-icon"></i>
+                        <p class="testimonial-text">"The Data Science path helps you understand the 'Why', not just the
+                            'How'. The visualization modules were particularly eye-opening. A must-have for anyone
+                            serious about big data analysis."</p>
+                        <div class="user-info">
+                            <img src="https://ui-avatars.com/api/?name=Priya+M&background=random" alt="User"
+                                class="avatar">
+                            <div class="user-details">
+                                <h4>Priya Mehta</h4>
+                                <span>Data Analyst at FinServe</span>
+                                <div class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo" style="margin-bottom:15px; font-size: 20px;"><i class="fas fa-bolt"></i> AILEXITY
+                    </div>
+                    <p>Empowering the next generation of engineers with industry-vetted skills and real-world projects.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <h4>Academy</h4>
+                    <ul>
+                        <li><a href="#">All Courses</a></li>
+                        <li><a href="#">Learning Paths</a></li>
+                        <li><a href="#">Mentorship</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="#">Discord Server</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                style="padding-top: 40px; border-top: 1px solid var(--dark-border); text-align: center; color: var(--text-dim); font-size: 12px;">
+                © 2026 Ailexity Academy. Build something amazing.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/db.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+        // --- Header Scroll Effect ---
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = auth.getCurrentUser();
+            if (currentUser) {
+                document.getElementById('auth-buttons').style.display = 'none';
+                document.getElementById('user-profile').style.display = 'flex';
+                document.getElementById('userName').innerText = currentUser.name.split(' ')[0];
+                document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name)}&background=FF5722&color=fff`;
+            }
+        });
+
+        function toggleUserMenu() {
+            document.getElementById('userMenu').classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        window.onclick = function (event) {
+            if (!event.target.closest('#user-profile')) {
+                const dropdowns = document.getElementsByClassName("user-dropdown");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('active')) {
+                        openDropdown.classList.remove('active');
+                    }
+                }
+            }
+        }
+
+        function handleEnrollment(courseId) {
+            const currentUser = auth.getCurrentUser();
+            if (currentUser) {
+                // Enroll the user
+                const result = db.enrollUser(currentUser.id, courseId);
+
+                if (result.success) {
+                    // Show success message (optional) and redirect
+                    // Using a small timeout to let the user see the action if we had a toast, 
+                    // but for now immediate redirect is fine.
+                    console.log("Enrolled successfully:", result);
+                } else {
+                    console.warn("Enrollment message:", result.message);
+                }
+
+                // Redirect to course dashboard
+                window.location.href = `course-dashboard.html?courseId=${courseId}`;
+            } else {
+                // Redirect to login with return url
+                // ideally pass the courseId to auto-enroll after login
+                window.location.href = `login.html?redirect=enroll&courseId=${courseId}`;
+            }
+        }
+    </script>
+</body>
+
+</html>

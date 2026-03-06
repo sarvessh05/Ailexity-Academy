@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+frontend/.env
+frontend/.env.local
+
+# Build outputs
+dist/
+frontend/dist/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Data files (optional - uncomment if you don't want to commit data)
+# *.json
+# !package.json
+# !package-lock.json
+# !tsconfig*.json
+
+# OAuth credentials
+google oauth json file/
+
+# Clerk
+.clerk/
+
+# Testing
+coverage/
+.nyc_output/

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - AILexity Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <style>
+        :root {
+            --color-primary: #FF5733;
+            --color-primary-hover: #e05858;
+            --color-dark: #2D3436;
+            --color-light: #F5F5F5;
+            --color-text: #333;
+            --color-border: #DDD;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F9F9F9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--color-border);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .auth-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-dark);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .auth-logo span {
+            color: var(--color-primary);
+        }
+
+        .auth-title {
+            font-size: 24px;
+            color: var(--color-dark);
+            margin-bottom: 8px;
+        }
+
+        .auth-subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--color-dark);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 8px;
+        }
+
+        .btn-submit:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .auth-link {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .error-message {
+            background: #ffe6e6;
+            color: #d63031;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <a href="homepage.html" class="auth-logo">AILexity <span>Academy</span></a>
+                <h1 class="auth-title">Create Account</h1>
+                <p class="auth-subtitle">Start your learning journey today</p>
+            </div>
+
+            <div id="error-message" class="error-message"></div>
+
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" id="name" class="form-input" required placeholder="John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" class="form-input" required placeholder="name@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-input" required placeholder="Min. 8 characters">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password" class="form-label">Confirm Password</label>
+                    <input type="password" id="confirm-password" class="form-input" required
+                        placeholder="Confirm your password">
+                </div>
+
+                <button type="submit" class="btn-submit">Sign Up</button>
+            </form>
+
+            <div class="social-login">
+                <div class="divider">or sign up with</div>
+                <a href="http://localhost:5000/api/auth/simulate/google" class="social-btn btn-google">
+                    <i class="fab fa-google social-icon" style="color: #DB4437;"></i> Google
+                </a>
+                <a href="http://localhost:5000/api/auth/simulate/facebook" class="social-btn btn-facebook">
+                    <i class="fab fa-facebook social-icon"></i> Facebook
+                </a>
+            </div>
+
+            <div class="auth-footer">
+                Already have an account? <a href="login.html" class="auth-link">Log in</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/db.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/toast.js"></script>
+    <script>
+        // Redirect if already logged in
+        (function checkSession() {
+            if (auth.getCurrentUser()) {
+                window.location.href = 'student-dashboard.html';
+            }
+        })();
+
+        document.getElementById('register-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = 'Sign Up';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+            btn.disabled = true;
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Client-side Validation (Simplified)
+            if (password !== confirmPassword) {
+                if (typeof Toast !== 'undefined') Toast.show("Passwords do not match", 'error');
+                else alert("Passwords do not match");
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                return;
+            }
+
+            if (password.length < 6) {
+                if (typeof Toast !== 'undefined') Toast.show("Password must be at least 6 characters", 'error');
+                else alert("Password too short");
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                return;
+            }
+
+            try {
+                // Register with Server
+                const result = await auth.register(name, email, password);
+
+                if (result.success) {
+                    if (typeof Toast !== 'undefined') Toast.show('Account created! Welcome ' + name, 'success');
+                    setTimeout(() => window.location.href = 'student-dashboard.html', 1500);
+                } else {
+                    if (typeof Toast !== 'undefined') Toast.show(result.message, 'error');
+                    else alert(result.message);
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            } catch (err) {
+                console.error('Registration error:', err);
+                if (typeof Toast !== 'undefined') Toast.show('An error occurred. Please try again.', 'error');
+                else alert('An error occurred. Please try again.');
+
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

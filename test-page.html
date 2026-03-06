@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - AILexity Academy</title>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --color-primary: #FF5733;
+            --color-dark: #2D3436;
+            --color-light: #F5F5F5;
+            --color-border: #DDD;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F9F9F9;
+            color: #333;
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--color-border);
+            position: relative;
+        }
+
+        /* Introduction View */
+        .quiz-intro {
+            text-align: center;
+        }
+
+        .quiz-icon {
+            font-size: 60px;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin-bottom: 15px;
+            color: var(--color-dark);
+        }
+
+        .meta-info {
+            color: #666;
+            margin-bottom: 30px;
+            background: var(--color-light);
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .btn-start {
+            background: var(--color-primary);
+            color: white;
+            font-size: 18px;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(255, 87, 51, 0.3);
+        }
+
+        .btn-start:hover {
+            transform: scale(1.05);
+        }
+
+        /* Question View */
+        .quiz-active {
+            display: none;
+        }
+
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #888;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF5733, #ff8a65);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .question-text {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--color-dark);
+            line-height: 1.4;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #eee;
+            padding: 18px 25px;
+            text-align: left;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option-btn:hover {
+            border-color: #ddd;
+            background: #fdfdfd;
+        }
+
+        .option-btn.selected {
+            border-color: var(--color-primary);
+            background: #fff5f2;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .option-marker {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .selected .option-marker {
+            border-color: var(--color-primary);
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .quiz-footer {
+            margin-top: 40px;
+            display: flex;
+            justify-content: flex-end;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .btn-next {
+            background: var(--color-dark);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: none;
+        }
+
+        /* Results View */
+        .quiz-results {
+            display: none;
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: white;
+            border: 10px solid var(--color-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .score-number {
+            font-size: 50px;
+            font-weight: 800;
+            color: var(--color-primary);
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 14px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .result-msg {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--color-dark);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="quiz-container">
+        <a href="course-dashboard.html" id="closeBtn"
+            style="position: absolute; right: 20px; top: 20px; text-decoration: none; color: #999; font-size: 24px;">&times;</a>
+
+        <!-- Start Screen -->
+        <div id="intro-view" class="quiz-intro">
+            <div class="quiz-icon"><i class="fas fa-clipboard-check"></i></div>
+            <h1>Module 1: Machine Learning Basics</h1>
+            <div class="meta-info">
+                <span><i class="far fa-question-circle"></i> 5 Questions</span> &nbsp;•&nbsp;
+                <span><i class="far fa-clock"></i> 10 Minutes</span> &nbsp;•&nbsp;
+                <span><i class="fas fa-trophy"></i> Passing: 70%</span>
+            </div>
+            <p
+                style="color: #666; margin-bottom: 40px; line-height: 1.6; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Assess your understanding of supervised vs unsupervised learning, basic terminology, and real-world
+                applications. Results will be recorded in your dashboard.
+            </p>
+            <button class="btn-start" onclick="startQuiz()">Start Quiz Now</button>
+        </div>
+
+        <!-- Question Screen -->
+        <div id="quiz-view" class="quiz-active">
+            <div class="header-bar">
+                <span id="q-number">Question 1/5</span>
+                <span><i class="far fa-clock"></i> <span id="timer">10:00</span></span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+
+            <div class="question-text" id="q-text">Loading question...</div>
+
+            <div class="options-grid" id="options-container">
+                <!-- Options injected here -->
+            </div>
+
+            <div class="quiz-footer">
+                <button class="btn-next" id="next-btn" onclick="nextQuestion()">Next Question <i
+                        class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-view" class="quiz-results">
+            <div class="score-circle">
+                <span class="score-number" id="score-display">0%</span>
+                <span class="score-label">Final Score</span>
+            </div>
+            <h2 class="result-msg" id="result-msg">Quiz Completed!</h2>
+            <p style="color: #666; margin-bottom: 30px;">
+                You have successfully completed the module assessment.
+            </p>
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <button class="btn-start" onclick="location.reload()"
+                    style="background: white; color: #333; border: 1px solid #ddd; font-size: 16px; padding: 12px 30px;">Retake</button>
+                <a href="course-dashboard.html" class="btn-start" id="finalBackBtn"
+                    style="text-decoration: none; font-size: 16px; padding: 12px 30px;">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/db.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        const API_BASE_URL = 'http://localhost:5000/api';
+
+        async function apiCall(endpoint) {
+            const token = localStorage.getItem('ailexity_auth_token');
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) headers['Authorization'] = token;
+            try {
+                const res = await fetch(`${API_BASE_URL}${endpoint}`, { headers });
+                return await res.json();
+            } catch (err) { console.error(err); return null; }
+        }
+
+        // Setup Links
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseId = urlParams.get('courseId') || '1';
+        document.getElementById('closeBtn').href = `course-dashboard.html?courseId=${courseId}`;
+        document.getElementById('finalBackBtn').href = `course-dashboard.html?courseId=${courseId}`;
+
+        // Global State
+        let questions = [];
+        let currentQIndex = 0;
+        let score = 0;
+        let quizTimer;
+        let timeLeft = 600; // 10 minutes in seconds
+        let userAnswers = []; // Store user's selected indices
+
+        // Initialize Data
+        (async function initData() {
+            const startBtn = document.querySelector('.btn-start');
+            startBtn.disabled = true;
+            startBtn.innerText = 'Loading Questions...';
+            startBtn.style.background = '#ccc';
+
+            try {
+                const courseTest = await apiCall(`/courses/${courseId}/tests`);
+                console.log('Fetched test data:', courseTest);
+
+                if (courseTest && courseTest.questions && courseTest.questions.length > 0) {
+                    questions = courseTest.questions.map(q => ({
+                        q: q.text || q.q,
+                        options: q.options,
+                        correct: q.correct
+                    }));
+                    console.log('Questions loaded:', questions);
+                } else {
+                    console.warn("No questions found", courseTest);
+                    // Fallback default
+                    questions = [{
+                        q: "No questions found for this course.",
+                        options: ["N/A", "N/A", "N/A", "N/A"],
+                        correct: 0
+                    }];
+                }
+            } catch (e) {
+                console.error("Failed to load questions", e);
+                questions = [{
+                    q: "Error loading questions.",
+                    options: ["N/A", "N/A", "N/A", "N/A"],
+                    correct: 0
+                }];
+            } finally {
+                startBtn.disabled = false;
+                startBtn.innerText = 'Start Quiz Now';
+                startBtn.style.background = 'var(--color-primary)';
+            }
+        })();
+
+        function startQuiz() {
+            if (questions.length === 0) return;
+            document.getElementById('intro-view').style.display = 'none';
+            document.getElementById('quiz-view').style.display = 'block';
+            userAnswers = new Array(questions.length).fill(-1); // Initialize answers
+            loadQuestion();
+            startTimer();
+        }
+
+        function startTimer() {
+            const timerEl = document.getElementById('timer');
+
+            quizTimer = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(quizTimer);
+                    showResults(); // Auto-submit
+                    return;
+                }
+
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerEl.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            if (questions.length === 0) {
+                console.error("No questions available");
+                return;
+            }
+
+            const q = questions[currentQIndex];
+
+            // Update UI
+            document.getElementById('q-number').textContent = `Question ${currentQIndex + 1}/${questions.length}`;
+            document.getElementById('progress').style.width = `${((currentQIndex) / questions.length) * 100}%`;
+            document.getElementById('q-text').textContent = q.q;
+            document.getElementById('next-btn').style.display = 'none';
+
+            // Options
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('div');
+                btn.className = 'option-btn';
+                if (userAnswers[currentQIndex] === idx) {
+                    btn.classList.add('selected');
+                }
+                btn.innerHTML = `<div class="option-marker">${String.fromCharCode(65 + idx)}</div> <div>${opt}</div>`;
+                btn.onclick = () => selectOption(btn, idx);
+                container.appendChild(btn);
+            });
+        }
+
+        function selectOption(btn, idx) {
+            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+
+            // Save answer immediately (before next click) to enable next button logic
+            // But we actually save it in nextQuestion, so here just UI
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.style.display = 'inline-block';
+
+            // Unbind previous onclick to avoid multiple triggers if logic changes, 
+            // but simple override is fine
+            nextBtn.onclick = () => nextQuestion(idx);
+        }
+
+        function nextQuestion(selectedIdx) {
+            userAnswers[currentQIndex] = selectedIdx; // Save answer
+
+            if (selectedIdx === questions[currentQIndex].correct) {
+                score++;
+            }
+
+            currentQIndex++;
+
+            if (currentQIndex < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            clearInterval(quizTimer);
+            document.getElementById('quiz-view').style.display = 'none';
+            document.getElementById('results-view').style.display = 'block';
+
+            const percentage = questions.length === 0 ? 0 : Math.round((score / questions.length) * 100);
+            document.getElementById('score-display').textContent = `${percentage}%`;
+
+            let msg = '';
+            let color = '';
+
+            if (percentage >= 70) {
+                msg = "Excellent Job! You Passed.";
+                color = "#4CAF50";
+
+                // Update Progress if passed (Local DB)
+                const user = auth.getCurrentUser();
+                if (user) {
+                    // Log Test Pass
+                    const testId = `test_${courseId}`; // Simplified ID
+                    const result = db.logActivity(user.id, courseId, 'TEST_PASS', testId, { score: percentage });
+
+                    if (result && result.success) {
+                        msg += ` (Progress Updated)`;
+                    } else if (result && result.message === 'Already logged') {
+                        msg += ` (Previously Passed)`;
+                    }
+                }
+            } else {
+                msg = "Keep Practicing!";
+                color = "#FF5733";
+            }
+
+            const msgEl = document.getElementById('result-msg');
+            msgEl.textContent = msg;
+            msgEl.style.color = color;
+
+            // Generate Answer Review
+            const reviewContainer = document.createElement('div');
+            reviewContainer.style.marginTop = '40px';
+            reviewContainer.style.textAlign = 'left';
+            reviewContainer.innerHTML = '<h3 style="margin-bottom: 20px;">Answer Key</h3>';
+
+            questions.forEach((q, idx) => {
+                const userIdx = userAnswers[idx];
+                const correctIdx = q.correct;
+                const isCorrect = userIdx === correctIdx;
+                const userOption = userIdx !== -1 && q.options[userIdx] ? q.options[userIdx] : 'Skipped';
+                const correctOption = q.options[correctIdx];
+
+                reviewContainer.innerHTML += `
+                    <div style="margin-bottom: 20px; padding: 15px; background: ${isCorrect ? '#e8f5e9' : '#ffebee'}; border-radius: 8px; border-left: 5px solid ${isCorrect ? '#4CAF50' : '#f44336'};">
+                        <div style="font-weight: 700; margin-bottom: 8px;">Q${idx + 1}: ${q.q}</div>
+                        <div style="font-size: 14px;">
+                            <span style="color: ${isCorrect ? '#2e7d32' : '#c62828'}; font-weight: 600;">Your Answer:</span> ${userOption} 
+                            ${!isCorrect ? `<br><span style="color: #2e7d32; font-weight: 600;">Correct Answer:</span> ${correctOption}` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Append review before the buttons
+            // remove old Review if exists (for retake) - simplistic approach
+            // Here we just append to specific container or insert
+            const previousReview = document.getElementById('review-container-unique');
+            if (previousReview) previousReview.remove();
+
+            reviewContainer.id = 'review-container-unique';
+
+            const buttonsDiv = document.querySelector('#results-view > div:last-child');
+            document.getElementById('results-view').insertBefore(reviewContainer, buttonsDiv);
+        }
+    </script>
+</body>
+
+</html>

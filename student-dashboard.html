@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AILexity | Student Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/theme.css">
+    <style>
+        :root {
+            --brand: #FF5500;
+            --brand-hover: #ff6a22;
+            --dark: #0A0A0A;
+            --grey-bg: #F5F5F7;
+            --card-bg: #FFFFFF;
+            --border: #E5E5E7;
+            --text-main: #1D1D1F;
+            --text-muted: #86868B;
+            --radius: 20px;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--grey-bg);
+            color: var(--text-main);
+            display: flex;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        aside {
+            width: 240px;
+            background: var(--dark);
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            padding: 2rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            color: white;
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--brand);
+        }
+
+        nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #a1a1a6;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.3s;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: rgba(255, 85, 0, 0.1);
+            color: var(--brand);
+        }
+
+        nav a.active {
+            background: var(--brand);
+            color: white;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            padding: 2rem 3rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+            object-fit: cover;
+        }
+
+        /* Section Headings */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .section-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .section-header a {
+            font-size: 0.85rem;
+            color: var(--brand);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Unified Belt / Stats Grid */
+        .unified-belt {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr 1fr;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .belt-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: var(--shadow);
+            transition: 0.4s cubic-bezier(0.2, 0, 0, 1);
+            cursor: pointer;
+            min-height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .belt-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--brand);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .compact-chart {
+            position: relative;
+            width: 85px;
+            height: 85px;
+            margin: 0 auto;
+        }
+
+        .chart-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+        }
+
+        .icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--grey-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Hero Banner (Active Course) */
+        .hero-banner {
+            background: var(--dark);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .hero-banner .content {
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero-banner h2 {
+            transition: opacity 0.3s ease;
+        }
+
+        .hero-banner p {
+            transition: opacity 0.3s ease;
+        }
+
+        .hero-banner .btn {
+            background: var(--brand);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .hero-banner .btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+            box-shadow: 0 5px 15px rgba(255, 85, 0, 0.4);
+        }
+
+        /* Progress Bar */
+        .progress-bar-bg {
+            height: 4px;
+            background: #eee;
+            border-radius: 10px;
+            margin-top: 15px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--brand);
+            transition: width 1s ease-in-out;
+        }
+
+        /* SPLIT LAYOUT */
+        .dashboard-split {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Course Grid */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 16px 40px rgba(255, 85, 0, 0.15);
+            border-color: var(--brand);
+        }
+
+        .course-card.active {
+            border-color: var(--brand);
+            background: linear-gradient(135deg, rgba(255, 85, 0, 0.02) 0%, rgba(255, 85, 0, 0.01) 100%);
+            box-shadow: 0 8px 20px rgba(255, 85, 0, 0.2);
+        }
+
+        .course-card.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--brand), transparent);
+            z-index: 10;
+        }
+
+        .course-thumb {
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .course-body {
+            padding: 1.2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-body h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .course-body p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid var(--grey-bg);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Sidebar Widgets (Activity & Deadlines) */
+        .widget-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .widget-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--grey-bg);
+        }
+
+        .activity-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border: none;
+        }
+
+        .activity-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            background: var(--grey-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .activity-content h5 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .activity-content p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .deadline-card {
+            background: #FF5500;
+            color: white;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 30px rgba(255, 85, 0, 0.25);
+        }
+
+        .deadline-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            transition: 0.2s;
+        }
+
+        .deadline-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .deadline-info div {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .deadline-info span {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .deadline-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: white;
+            color: var(--brand);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* MODAL STYLES */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 25px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 600px;
+            border-radius: var(--radius);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: fadeIn 0.3s;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        @media (max-width: 1100px) {
+            .unified-belt {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .dashboard-split {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 1.2rem;
+            }
+
+            aside {
+                display: none;
+            }
+
+            .hero-banner {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+
+            .hero-banner .btn {
+                width: 100%;
+                margin-left: 0 !important;
+                margin-top: 10px;
+            }
+
+            #badgeContainer {
+                margin-top: 20px;
+                width: 100%;
+            }
+
+            .section-header {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            /* Keep headers inline on mobile */
+            .schedule-item {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            /* Keep items compact */
+            .d-day {
+                font-size: 0.9rem;
+            }
+
+            .d-month {
+                font-size: 0.55rem;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Timeline (Systematic Activity) */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid var(--grey-bg);
+            margin-left: 10px;
+            margin-top: 15px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+            padding-left: 15px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--card-bg);
+            border: 2px solid var(--brand);
+            border-radius: 50%;
+        }
+
+        .t-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+            color: var(--text-main);
+        }
+
+        .t-time {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Deadlines (Schedule) */
+        .schedule-item {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            width: 100%;
+            transition: 0.2s;
+            backdrop-filter: blur(5px);
+        }
+
+        .schedule-item:hover {
+            transform: translateX(3px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .schedule-date {
+            background: white;
+            padding: 6px 1px;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            min-width: 45px;
+            height: 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .d-day {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--dark);
+            line-height: 1;
+        }
+
+        .d-month {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .s-info {
+            color: white;
+            flex: 1;
+        }
+
+        .s-info h5 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .s-info p {
+            font-size: 0.75rem;
+            opacity: 0.85;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Auth & Logic Scripts -->
+    <script src="js/db.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+        // CHECK AUTH
+        // 1. Check URL for OAuth Token & Data
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        const userDataB64 = urlParams.get('data');
+
+        if (token) {
+            auth.setToken(token);
+
+            if (userDataB64) {
+                try {
+                    // Decode Base64 User Data
+                    const jsonStr = atob(userDataB64);
+                    const userObj = JSON.parse(jsonStr);
+                    auth.setCurrentUser(userObj);
+                    console.log("Updated User from OAuth:", userObj);
+                } catch (e) {
+                    console.error("Failed to parse user data from URL", e);
+                }
+            }
+        }
+
+        // Remove params from URL for cleaner look (optional but nice)
+        if (token) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+
+        if (!auth.getCurrentUser()) {
+            // Redirect to Login if no user
+            window.location.href = 'login.html';
+        }
+
+        // Global State
+        let currentUser = null;
+        let myChart = null;
+
+        // Live Update Logic moved to bottom script
+        // Duplicate logAndNavigate removed
+
+        // Initialize moved to bottom script
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Handle the "Login with Google/Facebook" flashing success
+            const token = auth.getToken();
+            if (token && !sessionStorage.getItem('welcome_shown')) {
+                // Just logged in
+                if (typeof Toast !== 'undefined') Toast.show('Successfully logged in via Social Media', 'success');
+                sessionStorage.setItem('welcome_shown', 'true');
+            }
+
+            currentUser = auth.getCurrentUser();
+            // initDashboard calls moved to bottom script
+        });
+
+        // Click Logger and Hero Update
+        function logAndNavigate(courseId) {
+            if (currentUser && db) {
+                // Log the interaction
+                db.logActivity(currentUser.id, courseId, 'UI_CLICK', 'course_card', { title: 'Viewed Course Card' });
+            }
+
+            // Remove active class from all course cards
+            document.querySelectorAll('.course-card').forEach(card => {
+                card.classList.remove('active');
+            });
+
+            // Add active class to clicked card
+            const selectedCard = document.getElementById(`card-${courseId}`);
+            if (selectedCard) {
+                selectedCard.classList.add('active');
+            }
+
+            // Update hero section with selected course
+            updateHeroSection(courseId);
+        }
+
+        // Update Hero Section with Selected Course
+        function updateHeroSection(courseId) {
+            const enrollments = db.getUserEnrollments(currentUser.id);
+            const selectedCourse = enrollments.find(e => e.courseId == courseId);
+
+            if (selectedCourse) {
+                const heroSection = document.getElementById('heroSection');
+                heroSection.style.display = 'flex';
+
+                // Update hero content with animation
+                const heroTitle = document.getElementById('heroTitle');
+                const heroDesc = document.getElementById('heroDesc');
+                const heroProgress = document.getElementById('heroProgress');
+
+                heroTitle.style.opacity = '0.5';
+                heroDesc.style.opacity = '0.5';
+
+                setTimeout(() => {
+                    heroTitle.textContent = selectedCourse.courseTitle;
+                    heroDesc.textContent = selectedCourse.courseDescription || "Continue mastering your skills in this course.";
+                    heroProgress.textContent = `${selectedCourse.progress}%`;
+                    document.getElementById('heroBtn').onclick = () => window.location.href =
+                        `course-dashboard.html?courseId=${selectedCourse.courseId}`;
+
+                    heroTitle.style.opacity = '1';
+                    heroDesc.style.opacity = '1';
+                }, 200);
+
+                // Scroll hero into view smoothly
+                setTimeout(() => {
+                    document.getElementById('heroSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            }
+        }
+    </script>
+
+    <aside>
+        <a href="homepage.html" class="logo"><i class="fas fa-bolt"></i> AILEXITY</a>
+        <nav>
+            <a href="#" class="active"><i class="fas fa-columns"></i> Dashboard</a>
+            <a href="homepage.html#courses"><i class="fas fa-play-circle"></i> Browse Courses</a>
+            <a href="assignments.html"><i class="fas fa-code"></i> Assignments</a>
+            <a href="certificate.html"><i class="fas fa-certificate"></i> Awards</a>
+            <a href="#" onclick="auth.logout()" style="margin-top: auto; color: #ff5555;"><i
+                    class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </aside>
+
+    <main>
+        <header>
+            <div>
+                <h2 style="font-size: 1.5rem; font-weight: 800;" id="welcomeName">Welcome back</h2>
+                <p id="statsSummary">Loading your personalized stats...</p>
+            </div>
+            <div class="user-profile">
+                <i class="far fa-bell" style="margin-right: 20px; font-size: 1.2rem; color: var(--text-muted);"></i>
+                <img src="https://ui-avatars.com/api/?name=User&background=FF5500&color=fff" id="userAvatar"
+                    alt="Profile">
+                <script>
+                    const u = auth.getCurrentUser();
+                    if (u) {
+                        document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(u.name)}&background=FF5500&color=fff`;
+                        document.getElementById('welcomeName').textContent = `Hello, ${u.name.split(' ')[0]}`;
+                    }
+                </script>
+            </div>
+        </header>
+
+        <!-- Dynamic Content Container -->
+        <div id="dashboardContent">
+
+            <!-- 1. Hero Banner (Active Course) -->
+            <div class="hero-banner" id="heroSection" style="display:none;">
+                <div class="content">
+                    <span
+                        style="font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px; color: var(--brand); text-transform: uppercase;">Continue
+                        Learning</span>
+                    <h2 style="margin: 8px 0; font-size: 1.6rem;" id="heroTitle">Machine Learning Fundamentals</h2>
+                    <p style="color: #a1a1a6; margin-bottom: 1.5rem; max-width: 450px;" id="heroDesc">Resume your
+                        progress where you left off.</p>
+                    <button class="btn" id="heroBtn" onclick="">Resume Course</button>
+                    <button class="btn" style="background: rgba(255,255,255,0.1); margin-left:10px;"
+                        onclick="window.location.href='homepage.html#courses'">Explore More</button>
+                </div>
+                <div id="badgeContainer"
+                    style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.1); min-width: 140px; z-index: 2; backdrop-filter: blur(10px);">
+                    <i class="fas fa-chart-line" style="font-size: 2rem; color: #fff; margin-bottom: 8px;"
+                        id="badgeIcon"></i>
+                    <div style="font-size: 0.9rem; font-weight: 700;" id="heroProgress">0%</div>
+                    <div style="font-size: 0.65rem; opacity: 0.7;">COMPLETED</div>
+                </div>
+                <div
+                    style="position: absolute; right: -50px; top: -50px; width: 300px; height: 300px; background: var(--brand); filter: blur(100px); opacity: 0.3;">
+                </div>
+            </div>
+
+            <!-- 2. Unified Belt -->
+            <div class="section-header">
+                <h3>Overview</h3>
+            </div>
+            <section class="unified-belt">
+                <div class="belt-card">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <h3>Total Progress</h3>
+                        <i class="fas fa-layer-group" style="font-size: 0.8rem; color: var(--brand);"></i>
+                    </div>
+                    <div class="compact-chart">
+                        <canvas id="miniChart"></canvas>
+                        <div class="chart-label" id="chartPercent">0%</div>
+                    </div>
+                    <p style="text-align: center;" id="totalEnrolledText">0 Courses Enrolled</p>
+                </div>
+                <!-- Other Stats Cards -->
+                <div class="belt-card">
+                    <div class="icon-box" style="color: #5856D6;"><i class="fas fa-play"></i></div>
+                    <div>
+                        <h3>Videos Watched</h3>
+                        <p id="videoStatsText">0 completed</p>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-fill" id="videoBar" style="width: 0%; background: #5856D6;"></div>
+                    </div>
+                </div>
+                <div class="belt-card" onclick="window.location.href='assignments.html'">
+                    <div class="icon-box" style="color: var(--brand);"><i class="fas fa-code-branch"></i></div>
+                    <div>
+                        <h3>Assignments</h3>
+                        <p id="assignmentStatsText">0 submitted</p>
+                    </div>
+                    <p style="color: var(--brand); font-weight: 700; margin-top: 15px; font-size: 0.7rem;">VIEW ALL</p>
+                </div>
+                <div class="belt-card" onclick="window.location.href='certificate.html'">
+                    <div class="icon-box" style="color: #22C55E;"><i class="fas fa-award"></i></div>
+                    <div>
+                        <h3>Awards</h3>
+                        <p id="awardStatsText">0 Certificates</p>
+                    </div>
+                    <button class="btn-quiz"
+                        style="border: 1px solid #ddd; background: white; border-radius: 8px; padding: 8px; font-size: 0.7rem; font-weight: 700; margin-top: 15px; width: 100%; cursor: pointer;">VIEW
+                        CERTIFICATES</button>
+                </div>
+            </section>
+
+            <!-- 3. SPLIT SECTION -->
+            <div class="dashboard-split">
+                <!-- Left: My Courses -->
+                <div>
+                    <div class="section-header" style="margin-top: 0;">
+                        <h3>My Courses</h3>
+                        <a href="homepage.html#courses">Browse All</a>
+                    </div>
+                    <div class="course-grid" id="courseGrid">
+                        <!-- Populated Dynamite -->
+                    </div>
+                </div>
+
+                <!-- Right: Deadlines & Activity -->
+                <aside style="position: static; height: auto; background: transparent; padding: 0; width: 100%;">
+
+                    <!-- Deadlines Widget -->
+                    <div class="deadline-card" id="deadlineWidget" style="display:none;">
+                        <div
+                            style="font-size: 1rem; font-weight: 800; margin-bottom: 1.2rem; display: flex; justify-content: space-between;">
+                            <span>Upcoming Deadlines</span>
+                            <i class="far fa-calendar-alt"></i>
+                        </div>
+                        <div id="deadlineList" style="margin-top: 15px;">
+                            <!-- Items go here -->
+                        </div>
+                        <a href="assignments.html"
+                            style="color: white; font-size: 0.75rem; text-decoration: underline; display: block; text-align: center; margin-top: 15px;">View
+                            all assignments</a>
+                    </div>
+
+                    <!-- Recent Activity Widget -->
+                    <div class="widget-card">
+                        <div class="widget-title">
+                            Recent Activity
+                            <div style="display:flex; gap:10px; align-items:center;">
+                                <span style="font-size:0.7rem; color:var(--brand); cursor:pointer;"
+                                    onclick="openActivityModal()">View All</span>
+                                <i class="fas fa-history" style="color: #ccc;"></i>
+                            </div>
+                        </div>
+                        <div id="activityList" class="timeline">
+                            <div class="empty-state" style="padding: 1rem;">No recent activity.</div>
+                        </div>
+                    </div>
+
+                </aside>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ACTIVITY MODAL -->
+    <div id="activityModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal"
+                onclick="document.getElementById('activityModal').style.display='none'">&times;</span>
+            <h3 style="margin-bottom: 20px;">Full Activity History</h3>
+            <div id="fullActivityList" class="timeline">
+                <!-- Dynamically Populated -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // MODAL LOGIC
+        function openActivityModal() {
+            const modal = document.getElementById('activityModal');
+            const list = document.getElementById('fullActivityList');
+            modal.style.display = 'flex';
+
+            // Fetch ALL activities (limit 100)
+            const allActivity = db.getRecentActivity(currentUser.id, 100);
+
+            if (allActivity && allActivity.length > 0) {
+                list.innerHTML = allActivity.map(act => {
+                    // Use icon from DB helper or fallback
+                    let icon = act.displayIcon || 'fas fa-check';
+                    // If it's an emoji (from updated db.js), wrap in span, else use class
+                    let iconHtml = '';
+                    if (icon.startsWith('fa') || icon.includes(' ')) {
+                        iconHtml = `<i class="${icon}" style="font-size: 0.7rem; color: var(--brand);"></i>`;
+                    } else {
+                        iconHtml = `<span style="font-size: 0.9rem;">${icon}</span>`;
+                    }
+
+                    return `
+                        <div class="timeline-item">
+                            <div class="t-title">${act.displayTitle}</div>
+                            <div class="t-time">
+                                ${iconHtml}
+                                <span style="margin-left:5px">${act.timeAgo}</span>
+                                ${act.progressGain ? `<span style="margin-left:5px; color:#22C55E; font-size:0.7rem;">(${act.progressGain})</span>` : ''}
+                            </div>
+                        </div>
+                    `}).join('');
+            } else {
+                list.innerHTML = '<div class="empty-state">No activity found.</div>';
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function (event) {
+            const modal = document.getElementById('activityModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        async function initDashboard() {
+            try {
+                if (!currentUser) return;
+
+                // Sync in background (non-blocking)
+                if (db && db.sync) {
+                    db.sync(currentUser.id).catch(err => console.warn('Sync failed', err));
+                }
+
+                const enrollments = db.getUserEnrollments(currentUser.id) || [];
+                const userStats = db.getUserStats(currentUser.id) || { lessonsCompleted: 0 };
+                const recentActivity = db.getRecentActivity(currentUser.id, 5) || [];
+
+                // Update Header Stats immediately
+                const statsSummary = document.getElementById('statsSummary');
+                if (statsSummary) {
+                    statsSummary.textContent = `You have completed ${userStats.lessonsCompleted || 0} lessons across ${enrollments.length} courses.`;
+                }
+
+                // 1. Render Chart & Cards
+                let totalProgress = 0;
+                if (enrollments.length > 0) {
+                    totalProgress = Math.round(enrollments.reduce((acc, curr) => acc + (curr.progress || 0), 0) / enrollments.length);
+                }
+
+                // Safe Chart Rendering
+                try {
+                    renderChart(totalProgress);
+                } catch (e) { console.error('Chart error', e); }
+
+                document.getElementById('totalEnrolledText').textContent = `${enrollments.length} Active Courses`;
+
+                // Live Stats Calculation
+                const validLessons = parseInt(userStats.lessonsCompleted) || 0;
+                const validAssigns = parseInt(userStats.assignmentsSubmitted) || 0;
+                const badgesCount = document.querySelectorAll('.certificate-item').length + (parseInt(userStats.quizzesTaken) || 0);
+
+                document.getElementById('videoStatsText').textContent = `${validLessons} completed`;
+                document.getElementById('videoBar').style.width = Math.min(validLessons * 2, 100) + '%';
+
+                document.getElementById('assignmentStatsText').textContent = `${validAssigns} Submitted`;
+                document.getElementById('awardStatsText').textContent = `${badgesCount} Badges`;
+
+                // 2. Hero Section
+                const heroSection = document.getElementById('heroSection');
+                if (enrollments.length > 0) {
+                    const focusCourse = enrollments[0];
+                    heroSection.style.display = 'flex';
+                    document.getElementById('heroTitle').textContent = focusCourse.courseTitle;
+                    document.getElementById('heroDesc').textContent = focusCourse.courseDescription || "Continue mastering your skills in this course.";
+                    document.getElementById('heroProgress').textContent = `${focusCourse.progress}%`;
+                    document.getElementById('heroBtn').onclick = () => window.location.href = `course-dashboard.html?courseId=${focusCourse.courseId}`;
+                }
+
+                // 3. Render All Courses
+                const grid = document.getElementById('courseGrid');
+                if (enrollments.length === 0) {
+                    // Show Recommended Courses when empty
+                    const allCourses = db.getAllCourses();
+                    const recommendedHtml = allCourses.slice(0, 3).map(c => `
+                        <div class="course-card" onclick="window.location.href='homepage.html#courses'" style="cursor: pointer; opacity: 0.9;">
+                            <div class="course-thumb" style="background-image: url('${c.thumbnail}'); height: 120px;">
+                                <div style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600;">RECOMMENDED</div>
+                            </div>
+                            <div class="course-body" style="padding: 1rem;">
+                                <h4 style="font-size: 0.95rem; margin-bottom: 5px;">${c.title}</h4>
+                                <p style="font-size: 0.8rem; margin-bottom: 10px;">${c.description.substring(0, 50)}...</p>
+                                <span style="font-size: 0.8rem; font-weight: 700; color: var(--brand);">Start Learning <i class="fas fa-arrow-right" style="font-size:0.7rem"></i></span>
+                            </div>
+                        </div>`).join('');
+
+                    grid.innerHTML = `
+                    <div style="grid-column: 1/-1; margin-bottom: 20px;">
+                        <div class="empty-state" style="text-align: left; padding: 0; background: transparent; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                            <div>
+                                <h3 style="margin-bottom: 5px;">You haven't enrolled in any courses yet.</h3>
+                                <p>Here are some top picks to get you started:</p>
+                            </div>
+                            <a href="homepage.html#courses" class="btn" style="background: var(--brand); color: white;">Browse All</a>
+                        </div>
+                        <div class="course-grid" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+                            ${recommendedHtml}
+                        </div>
+                    </div>`;
+                } else {
+                    grid.innerHTML = enrollments.map(e => `
+                        <div class="course-card" id="card-${e.courseId}" onclick="logAndNavigate('${e.courseId}')" style="cursor: pointer;">
+                        <div class="course-thumb" style="background-image: url('${e.courseThumbnail}'); position: relative;">
+                            <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                                <i class="fas fa-chart-pie"></i> ${e.progress}%
+                            </div>
+                        </div>
+                        <div class="course-body">
+                            <h4 style="font-weight: 700; margin-bottom: 8px;">${e.courseTitle}</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">${e.courseDescription ? e.courseDescription.substring(0, 55) + '...' : 'No description'}</p>
+                            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">
+                                <i class="fas fa-circle" style="font-size: 4px; color: var(--brand);"></i>
+                                <span id="status-${e.courseId}">${Math.round(e.progress / 25)}% complete</span>
+                            </div>
+                            <div class="progress-bar-bg" style="width:100%; height:5px; margin-top:auto; border-radius: 3px;"><div class="progress-fill" style="width: ${e.progress}%; border-radius: 3px; background: linear-gradient(90deg, var(--brand), #ff8a65);"></div></div>
+                            ${e.progress === 100 ? `<button onclick="window.location.href='certificate.html?courseId=${e.courseId}'" style="width: 100%; padding: 10px; margin-top: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.85rem; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 5px 15px rgba(102, 126, 234, 0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'"><i class="fas fa-certificate" style="margin-right: 6px;"></i>Unlock Certificate</button>` : ''}
+                        </div>
+                    </div>`).join('');
+
+                    // Set first course as active
+                    if (enrollments.length > 0) {
+                        const firstCard = document.getElementById(`card-${enrollments[0].courseId}`);
+                        if (firstCard) firstCard.classList.add('active');
+                    }
+                }
+
+                // 4. Render Recent Activity (Systematic Timeline)
+                const activityContainer = document.getElementById('activityList');
+                if (recentActivity && recentActivity.length > 0) {
+                    activityContainer.innerHTML = recentActivity.map(act => {
+                        // Use icon and class from DB helper
+                        const iconDisplay = act.displayIcon.startsWith('fa') ? `<i class="${act.displayIcon}"></i>` : `<span style="font-size: 1.1em">${act.displayIcon}</span>`;
+
+                        return `
+                        <div class="timeline-item">
+                            <div class="t-title">${act.displayTitle}</div>
+                            <div class="t-time">
+                                <span class="activity-icon-small" style="margin-right:8px;">${iconDisplay}</span>
+                                ${act.timeAgo}
+                                ${act.progressGain ? `<span style="color:#22C55E; font-size:0.75rem; margin-left:6px; font-weight:700;">(${act.progressGain})</span>` : ''}
+                            </div>
+                        </div>`
+                    }).join('');
+                }
+
+                // 5. Render Upcoming Deadlines (Aggregated)
+                const deadlineWidget = document.getElementById('deadlineWidget');
+                const deadlineList = document.getElementById('deadlineList');
+                let pendingAssignments = [];
+
+                enrollments.forEach(e => {
+                    const assignments = db.getCourseAssignments(e.courseId);
+                    assignments.forEach(a => {
+                        if (a.status !== 'submitted' && a.status !== 'completed') {
+                            pendingAssignments.push({ ...a, courseTitle: e.courseTitle });
+                        }
+                    });
+                });
+
+                if (pendingAssignments.length > 0) {
+                    deadlineWidget.style.display = 'block';
+                    deadlineWidget.style.display = 'block';
+                    // Limit to 3
+                    deadlineList.innerHTML = pendingAssignments.slice(0, 3).map(a => `
+                        <div class="schedule-item">
+                        <div class="schedule-date">
+                            <div class="d-day">!</div>
+                            <div class="d-month">DUE</div>
+                        </div>
+                        <div class="s-info">
+                            <h5>${a.title}</h5>
+                            <p>${a.courseTitle}</p>
+                        </div>
+                    </div>`).join('');
+                } else {
+                    deadlineWidget.style.display = 'none'; // Hide if no deadlines
+                    // Or show empty state inside it if we want the widget to persist
+                }
+            } catch (err) {
+                console.error("Dashboard Init Error:", err);
+                document.getElementById('statsSummary').textContent = "We encountered an issue loading your stats.";
+            }
+        }
+
+        function renderChart(percent) {
+            const ctx = document.getElementById('miniChart').getContext('2d');
+            document.getElementById('chartPercent').textContent = percent + "%";
+            if (myChart) myChart.destroy();
+            myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [percent, 100 - percent],
+                        backgroundColor: ['#FF5500', '#E5E5E7'],
+                        borderWidth: 0,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    cutout: '75%',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                    animation: { duration: 1500, easing: 'easeOutQuart' }
+                }
+            });
+        }
+    </script>
+
+    <!-- Initialization Logic (Placed here to ensure functions are defined) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ensure user is loaded
+            if (typeof auth !== 'undefined') currentUser = auth.getCurrentUser();
+            initDashboard();
+        });
+
+        window.addEventListener('load', initDashboard);
+
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) initDashboard();
+        });
+
+        window.addEventListener('pageshow', (event) => {
+            // Refresh if coming back from cache
+            if (event.persisted) initDashboard();
+        });
+    </script>
+</body>
+
+</html>

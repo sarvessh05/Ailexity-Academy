@@ -1,0 +1,217 @@
+/* Dark Mode Overrides for Light-Default Pages (Dashboards, Login) */
+body.dark-mode {
+    /* Base Variables Override */
+    --grey-bg: #0A0A0B;
+    --card-bg: #141416;
+    --border: #232326;
+    --text-main: #FFFFFF;
+    --text-muted: #A1A1AA;
+    --dark: #050505;
+    /* Sidebar darken */
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+
+    /* Login/Register Specifics */
+    --color-light: #141416;
+    --color-text: #FFFFFF;
+    --color-border: #232326;
+    --color-dark: #FFFFFF;
+    /* Headings in login */
+
+    background-color: var(--grey-bg) !important;
+    color: var(--text-main) !important;
+}
+
+/* Ensure specifics update */
+body.dark-mode .belt-card,
+body.dark-mode .course-card,
+body.dark-mode .auth-card,
+body.dark-mode .stat-card,
+body.dark-mode aside,
+body.dark-mode .dashboard-header {
+    background: var(--card-bg);
+    border-color: var(--border);
+    color: var(--text-main);
+}
+
+body.dark-mode .form-input {
+    background: #1A1A1C;
+    border-color: var(--border);
+    color: white;
+}
+
+body.dark-mode .auth-title,
+body.dark-mode .auth-subtitle,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4 {
+    color: var(--text-main);
+}
+
+body.dark-mode nav a {
+    color: var(--text-muted);
+}
+
+body.dark-mode nav a:hover,
+body.dark-mode nav a.active {
+    color: white;
+    background: var(--brand);
+}
+
+/* Light Mode Overrides for Dark-Default Pages (Homepage) */
+body.light-mode {
+    --dark-bg: #F5F5F7;
+    --dark-card: #FFFFFF;
+    --dark-border: #E5E5E7;
+    --text-main: #1D1D1F;
+    --text-dim: #666;
+    --glass: rgba(0, 0, 0, 0.05);
+
+    background-color: var(--dark-bg);
+    color: var(--text-main);
+}
+
+body.light-mode header.scrolled {
+    background: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid var(--dark-border);
+}
+
+body.light-mode .course-tag {
+    color: white;
+    /* Keep tag text white */
+}
+
+/* Toggle Button */
+#theme-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #FF5722;
+    /* Default brand */
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#theme-toggle:hover {
+    transform: scale(1.1) rotate(15deg);
+}
+
+/* Sidebar fixes for Dashboard in Dark Mode */
+body.dark-mode aside {
+    background: #000000;
+    border-right: 1px solid #222;
+}
+
+/* --- Social Login Utilities (Global) --- */
+.social-login {
+    margin-top: 20px;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    color: #888;
+    font-size: 14px;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+}
+
+.divider::before {
+    margin-right: 10px;
+}
+
+.divider::after {
+    margin-left: 10px;
+}
+
+.social-btn {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s;
+    border: 1px solid #ddd;
+    background: white;
+    color: #333;
+    text-decoration: none;
+}
+
+.social-btn:hover {
+    background: #f8f9fa;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.btn-google {
+    color: #333;
+}
+
+.btn-facebook {
+    background: #1877F2;
+    color: white;
+    border-color: #1877F2;
+}
+
+.btn-facebook:hover {
+    background: #166fe5;
+    color: white;
+}
+
+.social-icon {
+    font-size: 18px;
+}
+
+/* Dark Mode Overrides for Social Login */
+body.dark-mode .social-btn {
+    background: #232326;
+    border-color: #232326;
+    color: white;
+}
+
+body.dark-mode .social-btn:hover {
+    background: #2A2A2D;
+}
+
+body.dark-mode .btn-facebook {
+    background: #1877F2;
+    /* Keep facebook blue */
+    color: white;
+}
+
+body.dark-mode .btn-facebook:hover {
+    background: #166fe5;
+}
+
+body.dark-mode .divider {
+    color: #666;
+}
+
+body.dark-mode .divider::before,
+body.dark-mode .divider::after {
+    border-color: #333;
+}

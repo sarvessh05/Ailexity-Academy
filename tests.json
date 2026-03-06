@@ -1,0 +1,84 @@
+[
+  {
+    "courseId": "1",
+    "title": "Module 1: Machine Learning Basics",
+    "duration": "10 mins",
+    "passScore": 70,
+    "questions": [
+      {
+        "id": 1,
+        "text": "What is Machine Learning?",
+        "options": [
+          "A program that runs only on machines",
+          "A technique that allows systems to learn from data and improve automatically",
+          "A hardware technology",
+          "A database management system"
+        ],
+        "correct": 1
+      },
+      {
+        "id": 2,
+        "text": "Which of the following is a type of Machine Learning?",
+        "options": [
+          "Supervised Learning",
+          "Unsupervised Learning",
+          "Reinforcement Learning",
+          "All of the above"
+        ],
+        "correct": 3
+      },
+      {
+        "id": 3,
+        "text": "In supervised learning, the model is trained using:",
+        "options": [
+          "Unlabeled data",
+          "Random data",
+          "Labeled data",
+          "No data"
+        ],
+        "correct": 2
+      },
+      {
+        "id": 4,
+        "text": "Which algorithm is commonly used for classification problems?",
+        "options": [
+          "Linear Regression",
+          "K-Means",
+          "Decision Tree",
+          "Apriori"
+        ],
+        "correct": 2
+      },
+      {
+        "id": 5,
+        "text": "What is overfitting in Machine Learning?",
+        "options": [
+          "When a model performs well on new data",
+          "When a model performs poorly on training data",
+          "When a model learns training data too well and fails on new data",
+          "When a dataset is too small"
+        ],
+        "correct": 2
+      }
+    ]
+  },
+  {
+    "courseId": "3",
+    "title": "Course Final Exam",
+    "duration": "30 mins",
+    "passScore": 70,
+    "questions": [
+      {
+        "text": "What is Data Mining?",
+        "options": [
+          "Process of storing data",
+          "Process of cleaning data",
+          "Process of discovering patterns from large datasets",
+          "Process of data backup"
+        ],
+        "correct": 2,
+        "id": 1769427398655
+      }
+    ]
+  }
+]

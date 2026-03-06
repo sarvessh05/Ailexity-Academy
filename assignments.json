@@ -1,0 +1,57 @@
+[
+  {
+    "courseId": "1",
+    "items": [
+      {
+        "id": "a1",
+        "title": "Assignment 3: Neural Networks",
+        "due": "Tomorrow",
+        "badge": "badge-urgent",
+        "desc": "Implement a basic NN.",
+        "status": "pending"
+      },
+      {
+        "title": "Neural Network ",
+        "due": "20 Jan 2026",
+        "badge": "badge-urgent",
+        "desc": "KMKL,",
+        "status": "pending",
+        "id": "assign_1769340437752"
+      },
+      {
+        "title": "sfdv",
+        "due": "27Jan 2026",
+        "badge": "badge-urgent",
+        "desc": "redv",
+        "status": "pending",
+        "id": "assign_1769427153669"
+      }
+    ]
+  },
+  {
+    "courseId": "2",
+    "items": [
+      {
+        "id": "a2",
+        "title": "Portfolio Project",
+        "due": "Next Week",
+        "badge": "badge-urgent",
+        "desc": "Build a website.",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "courseId": "3",
+    "items": [
+      {
+        "title": "vefdv",
+        "due": "27Jan 2026",
+        "badge": "badge-urgent",
+        "desc": "rsgdvxc ",
+        "status": "pending",
+        "id": "assign_1769427202346"
+      }
+    ]
+  }
+]
